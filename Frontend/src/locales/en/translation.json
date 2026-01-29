@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "home": "Home",
+    "tweaks": "Tweaks",
+    "clean": "Cleanup",
+    "backup": "Backup",
+    "utilities": "Utilities",
+    "dns": "DNS",
+    "apps": "Apps",
+    "settings": "Settings"
+  },
+  "home": {
+    "welcome": "Welcome back",
+    "system_status": "System Status",
+    "cpu_load": "CPU Load",
+    "ram_usage": "RAM Usage",
+    "processes": "Processes",
+    "uptime": "Uptime",
+    "active_tweaks": "Active Tweaks",
+    "optimization": "Optimization",
+    "optimize_des": "Boost performance now",
+    "unlock_fps": "Unlock FPS",
+    "unlock_des": "Get higher frame rates"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your VIE experience",
+    "personalization": "Personalization",
+    "accent_color": "Accent Color",
+    "accent_desc": "Choose your preferred main color.",
+    "pick_color": "Pick Color",
+    "language": "Language / Ngôn ngữ",
+    "language_desc": "Switch between Vietnamese and English.",
+    "compact_mode": "Compact Mode",
+    "compact_desc": "Reduce padding for smaller screens.",
+    "system": "System",
+    "run_admin": "Run as Administrator",
+    "run_admin_desc": "Force app to always request admin privileges.",
+    "unlock_fps_title": "Unlock FPS Limit",
+    "unlock_fps_desc": "Join our Discord to get the exclusive FPS unlocker tool.",
+    "get_tool": "Get Tool",
+    "data_mgmt": "Data Management",
+    "clear_backup": "Clear Backup Data",
+    "clear_backup_desc": "Removes old system restore points to save space.",
+    "modal_delete_title": "Clear All Backups?",
+    "modal_delete_desc": "This action cannot be undone. All registry backups created by VIE Tweaks will be permanently deleted.",
+    "cancel": "Cancel",
+    "confirm_delete": "Confirm Delete",
+    "toast_lang_changed": "Switched to English",
+    "toast_backup_deleted": "Backups deleted successfully"
+  },
+  "tweaks": {
+    "title": "System Tweaks",
+    "subtitle": "Fine-tune Windows for better performance and privacy.",
+    "refresh": "Refresh",
+    "performance": "Performance",
+    "network": "Network",
+    "privacy": "Privacy",
+    "interface": "Interface",
+    "no_tweaks": "No tweaks found available for your system.",
+    "enabled": "Tweak enabled",
+    "disabled": "Tweak disabled",
+    "failed": "Failed to apply tweak"
+  },
+  "clean": {
+    "title": "System Cleanup",
+    "subtitle": "Reclaim disk space by removing unnecessary files.",
+    "start": "Start Cleaning",
+    "cleaning": "Cleaning...",
+    "temp": "Temporary Files",
+    "prefetch": "Prefetch Cache",
+    "update": "Windows Update Cache",
+    "recycle": "Empty Recycle Bin",
+    "warning": "Warning",
+    "success": "Items cleaned successfully!",
+    "failed": "Cleanup failed"
+  },
+  "apps": {
+    "title": "App Manager",
+    "subtitle": "Remove pre-installed bloatware to free up resources.",
+    "clear": "Clear",
+    "remove": "Remove",
+    "success": "Selected apps removed successfully",
+    "failed": "Failed to remove apps",
+    "items": {
+        "cortana": "Microsoft's legacy voice assistant.",
+        "edge": "Built-in web browser.",
+        "onedrive": "Cloud storage integration.",
+        "xbox": "Xbox Game Bar and related services.",
+        "maps": "Offline maps application.",
+        "weather": "Weather forecast app.",
+        "news": "News feed widget.",
+        "telemetry": "Windows data collection services."
+    }
+  },
+  "utilities": {
+    "title": "Utilities",
+    "subtitle": "Useful tools and shortcuts for system management.",
+    "items": {
+        "activation": { "title": "Activation Status", "desc": "Check Windows activation state." },
+        "keyboard": { "title": "Keyboard Test", "desc": "Test all keys on your keyboard." },
+        "display": { "title": "Display Settings", "desc": "Quick access to resolution & scale." },
+        "network": { "title": "Network Reset", "desc": "Reset network adapters & stack." },
+        "disk": { "title": "Disk Cleanup (Native)", "desc": "Open classic Disk Cleanup tool." },
+        "cmd": { "title": "Command Prompt", "desc": "Launch CMD as Administrator." }
+    },
+    "failed": "Failed to launch"
+  },
+  "dns": {
+    "title": "DNS Manager",
+    "subtitle": "Change DNS servers to improve speed or privacy.",
+    "current": "Current Status",
+    "reset": "Reset to Default",
+    "flush": "Flush DNS Cache",
+    "flush_desc": "Clears local DNS resolver cache. Useful if you can't access some sites.",
+    "flush_btn": "Flush Now",
+    "flushed": "DNS Cache Flushed",
+    "updated": "DNS updated successfully",
+    "failed": "Failed to update DNS",
+    "reset_toast": "DNS reset to DHCP (Auto)",
+    "providers": {
+        "google": "Reliable and fast.",
+        "cloudflare": "Performance & Privacy focused.",
+        "quad9": "Malware blocking.",
+        "adguard": "Blocks Ads & Trackers."
+    }
+  },
+  "backup": {
+    "title": "Backup & Restore",
+    "subtitle": "Manage system restore points and registry backups.",
+    "create": "Create Backup",
+    "available": "Available Backups",
+    "restore": "Restore",
+    "no_backups": "No backups found.",
+    "modal_create_title": "Create Restore Point",
+    "modal_create_desc": "This will create a System Restore Point. It allows you to revert changes if something goes wrong. This process might take a few minutes.",
+    "create_now": "Create Now",
+    "creating": "Creating...",
+    "created": "Restore point created successfully",
+    "restoring": "Restoring backup..."
+  }
+}

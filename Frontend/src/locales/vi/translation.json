@@ -1,0 +1,142 @@
+{
+  "nav": {
+    "home": "Trang Chủ",
+    "tweaks": "Tinh Chỉnh",
+    "clean": "Dọn Dẹp",
+    "backup": "Sao Lưu",
+    "utilities": "Tiện Ích",
+    "dns": "DNS",
+    "apps": "Ứng Dụng",
+    "settings": "Cài Đặt"
+  },
+  "home": {
+    "welcome": "Chào mừng trở lại",
+    "system_status": "Trạng thái hệ thống",
+    "cpu_load": "CPU đang dùng",
+    "ram_usage": "RAM đang dùng",
+    "processes": "Tiến trình",
+    "uptime": "Thời gian h.động",
+    "active_tweaks": "Tinh chỉnh đang bật",
+    "optimization": "Tối ưu hóa",
+    "optimize_des": "Tăng hiệu suất ngay",
+    "unlock_fps": "Mở khóa FPS",
+    "unlock_des": "Tăng tốc độ khung hình"
+  },
+  "settings": {
+    "title": "Cài Đặt",
+    "subtitle": "Tùy chỉnh trải nghiệm VIE của bạn",
+    "personalization": "Cá nhân hóa",
+    "accent_color": "Màu chủ đạo",
+    "accent_desc": "Chọn màu sắc yêu thích của bạn.",
+    "pick_color": "Chọn màu",
+    "language": "Ngôn ngữ / Language",
+    "language_desc": "Chuyển đổi giữa Tiếng Việt và Tiếng Anh.",
+    "compact_mode": "Chế độ thu gọn",
+    "compact_desc": "Giảm khoảng cách cho màn hình nhỏ.",
+    "system": "Hệ thống",
+    "run_admin": "Chạy dưới quyền Admin",
+    "run_admin_desc": "Luôn yêu cầu quyền quản trị khi mở ứng dụng.",
+    "unlock_fps_title": "Mở khóa giới hạn FPS",
+    "unlock_fps_desc": "Tham gia Discord để nhận công cụ mở khóa FPS độc quyền.",
+    "get_tool": "Tải công cụ",
+    "data_mgmt": "Quản lý dữ liệu",
+    "clear_backup": "Xóa dữ liệu sao lưu",
+    "clear_backup_desc": "Xóa các điểm khôi phục cũ để giải phóng dung lượng.",
+    "modal_delete_title": "Xóa tất cả sao lưu?",
+    "modal_delete_desc": "Hành động này không thể hoàn tác. Tất cả sao lưu registry do VIE Tweaks tạo sẽ bị xóa vĩnh viễn.",
+    "cancel": "Hủy",
+    "confirm_delete": "Xác nhận xóa",
+    "toast_lang_changed": "Đã chuyển sang Tiếng Việt",
+    "toast_backup_deleted": "Đã xóa sao lưu thành công"
+  },
+  "tweaks": {
+    "title": "Tinh Chỉnh Hệ Thống",
+    "subtitle": "Tinh chỉnh Windows để có hiệu suất và bảo mật tốt hơn.",
+    "refresh": "Làm mới",
+    "performance": "Hiệu suất",
+    "network": "Mạng",
+    "privacy": "Bảo mật",
+    "interface": "Giao diện",
+    "no_tweaks": "Không tìm thấy tinh chỉnh nào cho hệ thống của bạn.",
+    "enabled": "Đã bật tinh chỉnh",
+    "disabled": "Đã tắt tinh chỉnh",
+    "failed": "Áp dụng thất bại"
+  },
+  "clean": {
+    "title": "Dọn Dẹp Hệ Thống",
+    "subtitle": "Giải phóng dung lượng bằng cách xóa các tệp không cần thiết.",
+    "start": "Bắt đầu dọn",
+    "cleaning": "Đang dọn...",
+    "temp": "Tệp tạm thời (Temp)",
+    "prefetch": "Bộ nhớ đệm Prefetch",
+    "update": "Cache Windows Update",
+    "recycle": "Dọn sạch Thùng rác",
+    "warning": "Cảnh báo",
+    "success": "Đã dọn dẹp thành công!",
+    "failed": "Dọn dẹp thất bại"
+  },
+  "apps": {
+    "title": "Quản Lý Ứng Dụng",
+    "subtitle": "Gỡ bỏ phần mềm rác (bloatware) để giải phóng tài nguyên.",
+    "clear": "Bỏ chọn",
+    "remove": "Gỡ bỏ",
+    "success": "Đã gỡ bỏ các ứng dụng đã chọn",
+    "failed": "Gỡ bỏ thất bại",
+    "items": {
+        "cortana": "Trợ lý ảo cũ của Microsoft.",
+        "edge": "Trình duyệt web mặc định.",
+        "onedrive": "Tích hợp lưu trữ đám mây.",
+        "xbox": "Xbox Game Bar và các dịch vụ liên quan.",
+        "maps": "Bản đồ ngoại tuyến.",
+        "weather": "Ứng dụng dự báo thời tiết.",
+        "news": "Tiện ích tin tức.",
+        "telemetry": "Dịch vụ thu thập dữ liệu Windows."
+    }
+  },
+  "utilities": {
+    "title": "Tiện Ích",
+    "subtitle": "Các công cụ hữu ích và lối tắt quản lý hệ thống.",
+    "items": {
+        "activation": { "title": "Trạng thái kích hoạt", "desc": "Kiểm tra bản quyền Windows." },
+        "keyboard": { "title": "Kiểm tra bàn phím", "desc": "Test lỗi phím online/offline." },
+        "display": { "title": "Cài đặt hiển thị", "desc": "Chỉnh độ phân giải & tỷ lệ nhanh." },
+        "network": { "title": "Đặt lại mạng", "desc": "Reset adapter mạng và stack IP." },
+        "disk": { "title": "Dọn ổ đĩa (Gốc)", "desc": "Mở công cụ Disk Cleanup cũ." },
+        "cmd": { "title": "Command Prompt", "desc": "Chạy CMD với quyền Admin." }
+    },
+    "failed": "Khởi chạy thất bại"
+  },
+  "dns": {
+    "title": "Quản Lý DNS",
+    "subtitle": "Thay đổi máy chủ DNS để cải thiện tốc độ hoặc bảo mật.",
+    "current": "Trạng thái hiện tại",
+    "reset": "Đặt về mặc định",
+    "flush": "Xóa Cache DNS",
+    "flush_desc": "Xóa bộ nhớ đệm phân giải DNS cục bộ. Hữu ích nếu không vào được web.",
+    "flush_btn": "Xóa ngay",
+    "flushed": "Đã xóa Cache DNS",
+    "updated": "Đã cập nhật DNS thành công",
+    "failed": "Cập nhật DNS thất bại",
+    "reset_toast": "Đã đặt lại DNS về DHCP (Tự động)",
+    "providers": {
+        "google": "Tin cậy và nhanh chóng.",
+        "cloudflare": "Tập trung vào hiệu suất & bảo mật.",
+        "quad9": "Chặn mã độc.",
+        "adguard": "Chặn Quảng cáo & Theo dõi."
+    }
+  },
+  "backup": {
+    "title": "Sao Lưu & Khôi Phục",
+    "subtitle": "Quản lý các điểm khôi phục hệ thống và sao lưu registry.",
+    "create": "Tạo sao lưu",
+    "available": "Bản sao lưu có sẵn",
+    "restore": "Khôi phục",
+    "no_backups": "Không tìm thấy bản sao lưu nào.",
+    "modal_create_title": "Tạo điểm khôi phục",
+    "modal_create_desc": "Hệ thống sẽ tạo một điểm khôi phục (Restore Point). Bạn có thể quay lại trạng thái này nếu có lỗi. Quá trình có thể mất vài phút.",
+    "create_now": "Tạo ngay",
+    "creating": "Đang tạo...",
+    "created": "Đã tạo điểm khôi phục thành công",
+    "restoring": "Đang khôi phục bản sao lưu..."
+  }
+}

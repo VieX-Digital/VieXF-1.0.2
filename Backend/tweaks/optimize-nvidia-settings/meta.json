@@ -1,0 +1,22 @@
+{
+  "title": {
+    "vi": "Tối ưu NVIDIA",
+    "en": "Optimize NVIDIA"
+  },
+  "name": "optimize-nvidia-settings",
+  "modal": "Bạn có thể hoàn tác các thay đổi này trong Nvidia Control Panel (hãy mở Control Panel Nvidia ít nhất một lần).",
+  "reversible": false,
+  "deepDescription": {
+    "vi": "Thay đổi các thiết lập sau trong NVIDIA Control Panel:\n\n- Image Scaling: Off\n- Ambient Occlusion: Off\n- Anisotropic Filtering: Application-controlled\n- Antialiasing – FXAA: Off\n- Antialiasing – Gamma Correction: Off\n- Antialiasing – Mode: Application-controlled\n- CUDA – GPUs: All\n- DSR Factors: Off\n- Low Latency Mode: On\n- Max Frame Rate: Off\n- Multi-Frame Sampled AA (MFAA): Off\n- OpenGL Rendering GPU: Use NVIDIA GPU\n- Power Management Mode: Prefer Maximum Performance\n- Shader Cache Size: Unlimited\n- Texture Filtering – Anisotropic Sample Optimization: On\n- Texture Filtering – Negative LOD Bias: Allow\n- Texture Filtering – Quality: High Performance\n- Texture Filtering – Trilinear Optimization: On\n- Threaded Optimization: On\n- Triple Buffering: Off\n- Vertical Sync: Off\n- Virtual Reality pre-rendered frames: 1",
+    "en": "Applies optimized profile for NVIDIA GPUs."
+  },
+  "category": [
+    "Performance",
+    "GPU",
+    "Gaming"
+  ],
+  "description": {
+    "vi": "Áp dụng profile tối ưu cho card màn hình NVIDIA.",
+    "en": "Applies optimized profile for NVIDIA GPUs."
+  }
+}
