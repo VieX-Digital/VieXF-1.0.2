@@ -49,8 +49,8 @@ export default function Titlebar() {
                     className="h-6 w-6 rounded-lg object-cover"
                 />
                 <div className="flex items-baseline gap-1.5 text-sm font-medium tracking-wide">
-                    <span className="text-white font-bold font-display">VieX</span>
-                    <span className="text-[10px] text-white/40 font-mono ml-1">v1.0.0</span>
+                    <span className="text-white font-bold font-display">VieXF</span>
+                    <span className="text-[10px] text-white/40 font-mono ml-1">1.0.1</span>
                 </div>
             </div>
 
