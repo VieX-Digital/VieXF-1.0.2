@@ -1,5 +1,5 @@
 {
-  "version": "2026-01-29T10:24:44.264Z",
+  "version": "2026-01-29T11:48:33.303Z",
   "tweaks": [
     {
       "id": "align-taskbar-left",
@@ -610,8 +610,8 @@
     {
       "id": "vie-amx",
       "title": {
-        "vi": "VieX 1.0.0",
-        "en": "VieX 1.0.0"
+        "vi": "VieXF 1.0.1",
+        "en": "VieXF 1.0.1"
       },
       "description": {
         "vi": "Áp dụng toàn bộ tối ưu hóa hệ thống (One-Click).",
