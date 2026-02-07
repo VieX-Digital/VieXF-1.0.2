@@ -1,0 +1,22 @@
+{
+  "title": {
+    "vi": "VieXF 1.0.2",
+    "en": "VieXF 1.0.2"
+  },
+  "name": "vie-amx",
+  "description": {
+    "vi": "Áp dụng toàn bộ tối ưu hóa hệ thống (One-Click).",
+    "en": "Apply all system optimizations (One-Click)."
+  },
+  "deepDescription": {
+    "vi": "Tweak này bao gồm Debloat, Network, DPC/ISR Latency, Services và Visual Tweaks tốt nhất cho Windows 10/11/12.",
+    "en": "This tweak includes Debloat, Network, DPC/ISR Latency, Services, and Visual Tweaks best suited for Windows 10/11/12."
+  },
+  "recommended": true,
+  "top": true,
+  "category": [
+    "Remember",
+    "Performance",
+    "Gaming"
+  ]
+}

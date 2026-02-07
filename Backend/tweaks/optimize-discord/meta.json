@@ -1,0 +1,12 @@
+{
+  "name": "optimize-discord",
+  "label": {
+    "en": "Optimize Discord",
+    "vi": "Tối ưu Discord"
+  },
+  "description": {
+    "en": "Reduces Discord's RAM usage without affecting its core functionality. This tweak aims to improve system performance while using Discord.",
+    "vi": "Giảm mức sử dụng RAM của Discord mà không ảnh hưởng đến chức năng cốt lõi. Tối ưu hóa hiệu suất hệ thống khi sử dụng Discord."
+  },
+  "category": "performance"
+}

@@ -1,0 +1,786 @@
+{
+  "version": "2026-02-03T08:34:07.744Z",
+  "tweaks": [
+    {
+      "id": "align-taskbar-left",
+      "title": {
+        "vi": "Căn thanh taskbar sang trái",
+        "en": "Align Taskbar Left"
+      },
+      "description": {
+        "vi": "Căn thanh taskbar về phía bên trái màn hình.",
+        "en": "Aligns the taskbar to the left side."
+      },
+      "category": [
+        "General",
+        "Appearance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/align-taskbar-left",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/align-taskbar-left/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name \"TaskbarAl\" -Type DWord -Value 0\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name \"TaskbarAl\" -Type DWord -Value 1\r\n"
+      }
+    },
+    {
+      "id": "detailed-bsod",
+      "title": {
+        "vi": "Màn hình xanh chi tiết",
+        "en": "Detailed BSOD"
+      },
+      "description": {
+        "vi": "Hiển thị thêm thông tin chi tiết khi gặp lỗi màn hình xanh.",
+        "en": "Shows more details on BSOD screens."
+      },
+      "category": [
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/detailed-bsod",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/detailed-bsod/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\CrashControl\" -Name \"Value\" -Type DWord -Value 1\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\CrashControl\" -Name \"Value\" -Type DWord -Value 0\r\n"
+      }
+    },
+    {
+      "id": "disable-background-ms-store-apps",
+      "title": {
+        "vi": "Tắt ứng dụng Store chạy ngầm",
+        "en": "Disable Background Store Apps"
+      },
+      "description": {
+        "vi": "Ngăn các ứng dụng Microsoft Store chạy ngầm.",
+        "en": "Prevents Store apps from running in background."
+      },
+      "category": [
+        "Performance",
+        "Privacy"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-background-ms-store-apps",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-background-ms-store-apps/meta.json",
+      "scripts": {
+        "apply": "$path = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications\"\r\n$name = \"GlobalUserDisabled\"\r\n$newValue = 1\r\n  \r\n# Ensure the key exists\r\nIf (-Not (Test-Path $path)) {\r\n  New-Item -Path $path -Force | Out-Null\r\n}\r\n  \r\n# Set the value\r\nSet-ItemProperty -Path $path -Name $name -Type DWord -Value $newValue\r\n  \r\nWrite-Host \"$name set to $newValue (Background Access Disabled)\"",
+        "unapply": " $path = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications\"\r\n  $name = \"GlobalUserDisabled\"\r\n  $originalValue = 0\r\n  \r\n  # Ensure the key exists\r\n  If (-Not (Test-Path $path)) {\r\n      New-Item -Path $path -Force | Out-Null\r\n  }\r\n  \r\n  # Revert the value\r\n  Set-ItemProperty -Path $path -Name $name -Type DWord -Value $originalValue\r\n  \r\n  Write-Host \"$name reverted to $originalValue (Background Access Restored)\" -ForegroundColor Yellow"
+      }
+    },
+    {
+      "id": "disable-copilot",
+      "title": {
+        "vi": "Tắt Windows Copilot",
+        "en": "Disable Copilot"
+      },
+      "description": {
+        "vi": "Vô hiệu hóa tính năng AI Copilot trên thanh taskbar.",
+        "en": "Disables the AI Copilot feature."
+      },
+      "category": [
+        "Performance",
+        "Privacy"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-copilot",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-copilot/meta.json",
+      "scripts": {
+        "apply": "Get-AppxPackage -AllUsers | Where-Object {$_.Name -Like '*Microsoft.Copilot*'} | Remove-AppxPackage -ErrorAction Continue",
+        "unapply": "winget install 9NHT9RB2F4HD --source msstore --accept-source-agreements --accept-package-agreements"
+      }
+    },
+    {
+      "id": "disable-core-isolation",
+      "title": {
+        "vi": "Tắt Core Isolation (VBS)",
+        "en": "Disable Core Isolation"
+      },
+      "description": {
+        "vi": "Tắt tính năng bảo mật ảo hóa để tăng hiệu năng game.",
+        "en": "Disables VBS to improve gaming performance."
+      },
+      "category": [
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-core-isolation",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-core-isolation/meta.json",
+      "scripts": {
+        "apply": "New-Item -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity\" -Force | Out-Null\r\n\r\nSet-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity\" `\r\n    -Name \"Enabled\" -Value 0 -Type DWord\r\n",
+        "unapply": "New-Item -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity\" -Force | Out-Null\r\n\r\nSet-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity\" `\r\n    -Name \"Enabled\" -Value 1 -Type DWord\r\n"
+      }
+    },
+    {
+      "id": "disable-defender-rtp",
+      "title": {
+        "vi": "Tắt bảo vệ thời gian thực",
+        "en": "Disable Defender RTP"
+      },
+      "description": {
+        "vi": "Tắt tính năng bảo vệ thời gian thực của Windows Defender.",
+        "en": "Disables Windows Defender Real-time Protection."
+      },
+      "category": [
+        "Performance",
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-defender-rtp",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-defender-rtp/meta.json",
+      "scripts": {
+        "apply": "Set-MpPreference -DisableRealtimeMonitoring $true",
+        "unapply": "Set-MpPreference -DisableRealtimeMonitoring $false"
+      }
+    },
+    {
+      "id": "disable-dynamic-ticking",
+      "title": {
+        "vi": "Tắt Dynamic Ticking",
+        "en": "Disable Dynamic Ticking"
+      },
+      "description": {
+        "vi": "Tắt tính năng dynamic ticking để ổn định độ trễ.",
+        "en": "Disables dynamic ticking for stable latency."
+      },
+      "category": [
+        "Performance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-dynamic-ticking",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-dynamic-ticking/meta.json",
+      "scripts": {
+        "apply": "try {\r\n    bcdedit /set disabledynamictick yes\r\n    Write-Host \"Dynamic Ticking disabled successfully\"\r\n  } catch {\r\n    Write-Host \"Failed to apply Dynamic Ticking tweak\"\r\n  }",
+        "unapply": "try {\r\n    bcdedit /set disabledynamictick no\r\n    Write-Host \"Dynamic Ticking settings restored\"\r\n  } catch {\r\n    Write-Host \"Failed to revert Dynamic Ticking tweak\"\r\n  }"
+      }
+    },
+    {
+      "id": "disable-fast-startup",
+      "title": {
+        "vi": "Tắt khởi động nhanh",
+        "en": "Disable Fast Startup"
+      },
+      "description": {
+        "vi": "Tắt Fast Startup để sửa lỗi và giải phóng dung lượng.",
+        "en": "Disables Fast Startup to free up hibernation file."
+      },
+      "category": [
+        "Performance",
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-fast-startup",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-fast-startup/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path 'HKLM:\\\\SYSTEM\\\\CurrentControlSet\\\\Control\\\\Session Manager\\\\Power' -Name HiberbootEnabled -Value 0",
+        "unapply": "Set-ItemProperty -Path 'HKLM:\\\\SYSTEM\\\\CurrentControlSet\\\\Control\\\\Session Manager\\\\Power' -Name HiberbootEnabled -Value 1"
+      }
+    },
+    {
+      "id": "disable-gamebar",
+      "title": {
+        "vi": "Tắt Xbox Game Bar",
+        "en": "Disable Game Bar"
+      },
+      "description": {
+        "vi": "Tắt tính năng Xbox Game Bar overlay.",
+        "en": "Disables Xbox Game Bar overlay."
+      },
+      "category": [
+        "Performance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-gamebar",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-gamebar/meta.json",
+      "scripts": {
+        "apply": "try {\r\n    winget uninstall 9nzkpstsnw4p --silent --accept-source-agreements \r\n        Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage -ErrorAction Stop\r\n      \r\n        Write-Output 'Successfully removed Xbox Gaming Overlay via AppxPackage'\r\n    }\r\n    catch {\r\n        Write-Output 'AppxPackage removal failed, trying to remove via winget'\r\n        try {\r\n            winget uninstall 9nzkpstsnw4p --silent --accept-source-agreements \r\n            Write-Output 'Successfully removed Xbox Gaming Overlay via winget'\r\n        }\r\n        catch {\r\n            Write-Output 'Winget uninstall failed'\r\n        }\r\n    }",
+        "unapply": "winget install 9NZKPSTSNW4P --source msstore --accept-source-agreements --accept-package-agreements"
+      }
+    },
+    {
+      "id": "disable-hibernation",
+      "title": {
+        "vi": "Tắt chế độ ngủ đông",
+        "en": "Disable Hibernation"
+      },
+      "description": {
+        "vi": "Tắt chế độ ngủ đông và xóa file hiberfil.sys.",
+        "en": "Disables hibernation and deletes hiberfil.sys."
+      },
+      "category": [
+        "Performance",
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-hibernation",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-hibernation/meta.json",
+      "scripts": {
+        "apply": "powercfg.exe /hibernate off",
+        "unapply": "powercfg.exe /hibernate on"
+      }
+    },
+    {
+      "id": "disable-location-tracking",
+      "title": {
+        "vi": "Tắt định vị",
+        "en": "Disable Location Tracking"
+      },
+      "description": {
+        "vi": "Tắt tính năng theo dõi vị trí toàn hệ thống.",
+        "en": "Disables system-wide location tracking."
+      },
+      "category": [
+        "Privacy"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-location-tracking",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-location-tracking/meta.json",
+      "scripts": {
+        "apply": "  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection\" -Name \"Allow\" -Value \"Deny\" -Type String -Force\r\n  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location\" -Name \"SensorPermissionState\" -Value 0 -Type DWord -Force\r\n  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Diagnostics\\DiagTrack\" -Name \"Status\" -Value 0 -Type DWord -Force\r\n  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\" -Name \"AutoUpdateEnabled\" -Value 0 -Type DWord -Force",
+        "unapply": "  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection\" -Name \"Allow\" -Value \"Allow\" -Type String -Force\r\n  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location\" -Name \"SensorPermissionState\" -Value 1 -Type DWord -Force\r\n  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Diagnostics\\DiagTrack\" -Name \"Status\" -Value 1 -Type DWord -Force\r\n  Set-ItemProperty -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\" -Name \"AutoUpdateEnabled\" -Value 1 -Type DWord -Force"
+      }
+    },
+    {
+      "id": "disable-lockscreen-tips",
+      "title": {
+        "vi": "Tắt gợi ý màn hình khóa",
+        "en": "Disable Lockscreen Tips"
+      },
+      "description": {
+        "vi": "Xóa bỏ các gợi ý và mẹo vặt trên màn hình khóa.",
+        "en": "Removes fun facts and tips from lockscreen."
+      },
+      "category": [
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-lockscreen-tips",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-lockscreen-tips/meta.json",
+      "scripts": {
+        "apply": "# Disable fun facts, tips, and more on the lock screen\r\nSet-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" -Name \"RotatingLockScreenOverlayEnabled\" -Value 0 -Type DWord\r\nSet-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" -Name \"SubscribedContent-338387Enabled\" -Value 0 -Type DWord\r\n",
+        "unapply": "# Enable fun facts, tips, and more on the lock screen\r\nSet-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" -Name \"RotatingLockScreenOverlayEnabled\" -Value 1 -Type DWord\r\nSet-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" -Name \"SubscribedContent-338387Enabled\" -Value 1 -Type DWord\r\n"
+      }
+    },
+    {
+      "id": "disable-mouse-acceleration",
+      "title": {
+        "vi": "Tắt gia tốc chuột",
+        "en": "Disable Mouse Acceleration"
+      },
+      "description": {
+        "vi": "Tắt tính năng 'Enhance pointer precision' để chuột chính xác hơn.",
+        "en": "Disables 'Enhance pointer precision' for 1:1 aim."
+      },
+      "category": [
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-mouse-acceleration",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-mouse-acceleration/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Mouse\" -Name \"MouseSpeed\" -Value \"0\"\r\nSet-ItemProperty -Path \"HKCU:\\Control Panel\\Mouse\" -Name \"MouseThreshold1\" -Value \"0\"\r\nSet-ItemProperty -Path \"HKCU:\\Control Panel\\Mouse\" -Name \"MouseThreshold2\" -Value \"0\"\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Mouse\" -Name \"MouseSpeed\" -Value \"1\"\r\nSet-ItemProperty -Path \"HKCU:\\Control Panel\\Mouse\" -Name \"MouseThreshold1\" -Value \"6\"\r\nSet-ItemProperty -Path \"HKCU:\\Control Panel\\Mouse\" -Name \"MouseThreshold2\" -Value \"10\"\r\n"
+      }
+    },
+    {
+      "id": "disable-wifi-sense",
+      "title": {
+        "vi": "Tắt Wi-Fi Sense",
+        "en": "Disable Wi-Fi Sense"
+      },
+      "description": {
+        "vi": "Ngăn chặn chia sẻ thông tin đăng nhập Wi-Fi.",
+        "en": "Prevents sharing Wi-Fi credentials."
+      },
+      "category": [
+        "Privacy",
+        "Network",
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/disable-wifi-sense",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/disable-wifi-sense/meta.json",
+      "scripts": {
+        "apply": "  Set-ItemProperty -Path \"HKLM:\\Software\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting\" -Name \"Value\" -Type DWord -Value 0\r\n  Set-ItemProperty -Path \"HKLM:\\Software\\Microsoft\\PolicyManager\\default\\WiFi\\AllowAutoConnectToWiFiSenseHotspots\" -Name \"Value\" -Type DWord -Value 0",
+        "unapply": "Set-ItemProperty -Path \"HKLM:\\Software\\Microsoft\\PolicyManager\\default\\WiFi\\AllowWiFiHotSpotReporting\" -Name \"Value\" -Type DWord -Value 1\r\nSet-ItemProperty -Path \"HKLM:\\Software\\Microsoft\\PolicyManager\\default\\WiFi\\AllowAutoConnectToWiFiSenseHotspots\" -Name \"Value\" -Type DWord -Value 1"
+      }
+    },
+    {
+      "id": "enable-dark-mode",
+      "title": {
+        "vi": "Bật chế độ tối",
+        "en": "Enable Dark Mode"
+      },
+      "description": {
+        "vi": "Bắt buộc hệ thống và ứng dụng sử dụng chế độ tối.",
+        "en": "Forces system and apps to use Dark Mode."
+      },
+      "category": [
+        "General",
+        "Appearance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/enable-dark-mode",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/enable-dark-mode/meta.json",
+      "scripts": {
+        "apply": "$Path = \"HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"\r\nSet-ItemProperty -Path $Path -Name AppsUseLightTheme -Value 0\r\nSet-ItemProperty -Path $Path -Name SystemUsesLightTheme -Value 0\r\nStop-Process -Name explorer -Force\r\nStart-Process explorer.exe\r\n",
+        "unapply": "$Path = \"HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\"\r\nSet-ItemProperty -Path $Path -Name AppsUseLightTheme -Value 1\r\nSet-ItemProperty -Path $Path -Name SystemUsesLightTheme -Value 1\r\nStop-Process -Name explorer -Force\r\nStart-Process explorer.exe\r\n"
+      }
+    },
+    {
+      "id": "enable-end-task-right-click",
+      "title": {
+        "vi": "Bật End Task ở Taskbar",
+        "en": "Enable Right-Click End Task"
+      },
+      "description": {
+        "vi": "Thêm tùy chọn 'End Task' vào menu chuột phải thanh taskbar.",
+        "en": "Adds 'End Task' option to Taskbar context menu."
+      },
+      "category": [
+        "General"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/enable-end-task-right-click",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/enable-end-task-right-click/meta.json",
+      "scripts": {
+        "apply": "$regPath = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings\"\r\n$valueName = \"TaskbarEndTask\"\r\n\r\nif (-not (Test-Path $regPath)) {\r\n    New-Item -Path $regPath -Force | Out-Null\r\n}\r\n\r\nSet-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value 1",
+        "unapply": "$regPath = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings\"\r\n$valueName = \"TaskbarEndTask\"\r\n\r\nif (-not (Test-Path $regPath)) {\r\n    New-Item -Path $regPath -Force | Out-Null\r\n}\r\n\r\nSet-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value 0"
+      }
+    },
+    {
+      "id": "enable-game-mode",
+      "title": {
+        "vi": "Bật Game Mode",
+        "en": "Enable Game Mode"
+      },
+      "description": {
+        "vi": "Đảm bảo chế độ Game Mode được bật.",
+        "en": "Ensures Windows Game Mode is ON."
+      },
+      "category": [
+        "General",
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/enable-game-mode",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/enable-game-mode/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\GameBar\" -Name \"AllowAutoGameMode\" -Value 1\r\nSet-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\GameBar\" -Name \"AutoGameModeEnabled\" -Value 1\r\n\r\nWrite-Output \"Game Mode is now ENABLED.\"\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\GameBar\" -Name \"AllowAutoGameMode\" -Value 0\r\nSet-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\GameBar\" -Name \"AutoGameModeEnabled\" -Value 0\r\n\r\nWrite-Output \"Game Mode is now DISABLED.\"\r\n"
+      }
+    },
+    {
+      "id": "enable-hags",
+      "title": {
+        "vi": "Bật HAGS",
+        "en": "Enable HAGS"
+      },
+      "description": {
+        "vi": "Bật tính năng lập lịch GPU bằng phần cứng.",
+        "en": "Enables Hardware Accelerated GPU Scheduling."
+      },
+      "category": [
+        "Performance",
+        "Gaming",
+        "GPU"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/enable-hags",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/enable-hags/meta.json",
+      "scripts": {
+        "apply": "$regPath = \"HKLM:\\System\\CurrentControlSet\\Control\\GraphicsDrivers\"\r\n$keyName = \"HwSchMode\"\r\n$value = 2\r\n\r\nIf (-not (Test-Path $regPath)) {\r\n    New-Item -Path $regPath -Force | Out-Null\r\n}\r\n\r\nSet-ItemProperty -Path $regPath -Name $keyName -Value $value -Type DWord\r\n\r\nWrite-Host \"Hardware-Accelerated GPU Scheduling enabled. A restart may be required.\"\r\n",
+        "unapply": "$regPath = \"HKLM:\\System\\CurrentControlSet\\Control\\GraphicsDrivers\"\r\n$keyName = \"HwSchMode\"\r\n$value = 1\r\n\r\nIf (Test-Path $regPath) {\r\n    Set-ItemProperty -Path $regPath -Name $keyName -Value $value -Type DWord\r\n    Write-Host \"Hardware-Accelerated GPU Scheduling disabled. A restart may be required.\"\r\n}\r\nelse {\r\n    Write-Host \"Registry path not found.\"\r\n}\r\n"
+      }
+    },
+    {
+      "id": "enable-optimization-for-windowed-games",
+      "title": {
+        "vi": "Tối ưu game cửa sổ",
+        "en": "Optimize Windowed Games"
+      },
+      "description": {
+        "vi": "Bật các tối ưu hóa cho game chạy ở chế độ cửa sổ.",
+        "en": "Enables optimizations for windowed games."
+      },
+      "category": [
+        "General",
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/enable-optimization-for-windowed-games",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/enable-optimization-for-windowed-games/meta.json",
+      "scripts": {
+        "apply": "\r\n$regPath = \"HKCU:\\Software\\Microsoft\\DirectX\\UserGpuPreferences\"\r\n$keyName = \"DirectXUserGlobalSettings\"\r\n$value = \"SwapEffectUpgradeEnable=1;\"\r\n\r\nIf (-not (Test-Path $regPath)) {\r\n    New-Item -Path $regPath -Force | Out-Null\r\n}\r\n\r\nSet-ItemProperty -Path $regPath -Name $keyName -Value $value\r\n\r\nWrite-Host \"DirectX game optimization applied.\"\r\n",
+        "unapply": "$regPath = \"HKCU:\\Software\\Microsoft\\DirectX\\UserGpuPreferences\"\r\n$keyName = \"DirectXUserGlobalSettings\"\r\n\r\nIf (Test-Path \"$regPath\\$keyName\") {\r\n    Remove-ItemProperty -Path $regPath -Name $keyName -ErrorAction SilentlyContinue\r\n    Write-Host \"DirectX game optimization removed.\"\r\n}\r\nelse {\r\n    Write-Host \"Registry key does not exist, nothing to remove.\"\r\n}\r\n"
+      }
+    },
+    {
+      "id": "menu-show-delay-zero",
+      "title": {
+        "vi": "Menu hiện tức thì",
+        "en": "Zero Menu Delay"
+      },
+      "description": {
+        "vi": "Giảm độ trễ hiển thị menu xuống 0ms.",
+        "en": "Reduces menu show delay to 0ms."
+      },
+      "category": [
+        "Performance",
+        "Appearance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/menu-show-delay-zero",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/menu-show-delay-zero/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"MenuShowDelay\" -Type String -Value \"0\"\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKCU:\\Control Panel\\Desktop\" -Name \"MenuShowDelay\" -Type String -Value \"400\"\r\n"
+      }
+    },
+    {
+      "id": "optimize-cpu-process",
+      "title": {
+        "vi": "Giảm tải CPU Process",
+        "en": "Reduce CPU Process Load"
+      },
+      "description": {
+        "vi": "Tắt SysMain, tối ưu registry để giảm tải CPU từ tiến trình nền, ưu tiên xử lý và tắt Power Throttling.",
+        "en": "Disables SysMain, optimizes registry to reduce background process CPU load, enhances processor scheduling, and disables Power Throttling."
+      },
+      "category": [
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/optimize-cpu-process",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/optimize-cpu-process/meta.json",
+      "scripts": {
+        "apply": "Write-Host \"Applying CPU process optimizations...\"\r\n\r\n$ErrorActionPreference = 'SilentlyContinue'\r\n\r\n# 1. Disable SysMain (Superfetch) - reduces CPU/disk from background prefetching (especially on SSD)\r\ntry {\r\n    Set-Service -Name \"SysMain\" -StartupType Disabled -ErrorAction Stop\r\n    Stop-Service -Name \"SysMain\" -Force -ErrorAction SilentlyContinue\r\n    Write-Host \"SysMain (Superfetch) disabled.\"\r\n} catch {\r\n    Write-Warning \"SysMain not found or could not be disabled: $_\"\r\n}\r\n\r\n# 2. Registry: Memory Management - reduce I/O and keep kernel in RAM\r\n$memPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management\"\r\nif (-not (Test-Path $memPath)) {\r\n    New-Item -Path $memPath -Force | Out-Null\r\n}\r\n\r\nSet-ItemProperty -Path $memPath -Name \"NtfsDisableLastAccessUpdate\" -Type DWord -Value 1 -ErrorAction SilentlyContinue\r\nSet-ItemProperty -Path $memPath -Name \"DisablePagingExecutive\" -Type DWord -Value 1 -ErrorAction SilentlyContinue\r\n\r\n# 3. Registry: Processor Scheduling - prioritize foreground programs more aggressively\r\n$priorityPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl\"\r\nif (-not (Test-Path $priorityPath)) {\r\n    New-Item -Path $priorityPath -Force | Out-Null\r\n}\r\n# Value 26 (hex 1a) gives foreground apps a 6x boost and longer quantum. Default is 2.\r\nSet-ItemProperty -Path $priorityPath -Name \"Win32PrioritySeparation\" -Type DWord -Value 26 -ErrorAction SilentlyContinue\r\n\r\n# 4. Registry: Disable Power Throttling - ensure background processes get full CPU power\r\n$powerThrottlingPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling\"\r\nif (-not (Test-Path $powerThrottlingPath)) {\r\n    New-Item -Path $powerThrottlingPath -Force | Out-Null\r\n}\r\nSet-ItemProperty -Path $powerThrottlingPath -Name \"PowerThrottlingOff\" -Type DWord -Value 1 -ErrorAction SilentlyContinue\r\n\r\nWrite-Host \"Registry tweaks applied.\"\r\nWrite-Host \"CPU process optimizations applied successfully.\"",
+        "unapply": "Write-Host \"Reverting CPU process optimizations...\"\r\n\r\n$ErrorActionPreference = 'SilentlyContinue'\r\n\r\n# 1. Re-enable SysMain (Superfetch)\r\ntry {\r\n    Set-Service -Name \"SysMain\" -StartupType Automatic -ErrorAction Stop\r\n    Start-Service -Name \"SysMain\" -ErrorAction SilentlyContinue\r\n    Write-Host \"SysMain (Superfetch) re-enabled.\"\r\n} catch {\r\n    Write-Warning \"SysMain could not be re-enabled: $_\"\r\n}\r\n\r\n# 2. Registry: restore defaults\r\n$memPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management\"\r\nif (Test-Path $memPath) {\r\n    Set-ItemProperty -Path $memPath -Name \"NtfsDisableLastAccessUpdate\" -Type DWord -Value 0 -ErrorAction SilentlyContinue\r\n    Set-ItemProperty -Path $memPath -Name \"DisablePagingExecutive\" -Type DWord -Value 0 -ErrorAction SilentlyContinue\r\n}\r\n\r\n# 3. Registry: Processor Scheduling - revert to default\r\n$priorityPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl\"\r\nif (Test-Path $priorityPath) {\r\n    Set-ItemProperty -Path $priorityPath -Name \"Win32PrioritySeparation\" -Type DWord -Value 2 -ErrorAction SilentlyContinue\r\n}\r\n\r\n# 4. Registry: Re-enable Power Throttling - remove the key\r\n$powerThrottlingPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling\"\r\nif (Test-Path $powerThrottlingPath) {\r\n    Remove-ItemProperty -Path $powerThrottlingPath -Name \"PowerThrottlingOff\" -ErrorAction SilentlyContinue\r\n}\r\n\r\nWrite-Host \"CPU process optimizations reverted to defaults.\""
+      }
+    },
+    {
+      "id": "optimize-network-settings",
+      "title": {
+        "vi": "Tối ưu mạng",
+        "en": "Optimize Network"
+      },
+      "description": {
+        "vi": "Tối ưu hóa các thiết lập TCP/IP cho chơi game.",
+        "en": "Optimizes TCP/IP settings for gaming."
+      },
+      "category": [
+        "Network",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "updatedversion": "3.0.0",
+      "docsurl": "https://docs.getvie.net/tweaks/optimize-network-settings",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/optimize-network-settings/meta.json",
+      "scripts": {
+        "apply": "Write-Host \"Applying network tweaks...\"\r\n\r\n# TCP/IP tweaks - applies in order, continues even if one fails\r\n$ErrorActionPreference = 'SilentlyContinue'\r\n\r\nnetsh int tcp set heuristics disabled\r\nnetsh int tcp set supplemental template=internet congestionprovider=ctcp\r\nnetsh int tcp set global rss=enabled\r\nnetsh int tcp set global ecncapability=enabled\r\nnetsh int tcp set global timestamps=disabled\r\nnetsh int tcp set global fastopen=enabled\r\nnetsh int tcp set global fastopenfallback=enabled\r\nnetsh int tcp set supplemental template=custom icw=10\r\n\r\n# MTU: only apply to interfaces that exist (names vary: \"Ethernet 2\", \"Wi-Fi\", locale-specific)\r\n$interfaces = (Get-NetIPInterface -AddressFamily IPv4 -ErrorAction SilentlyContinue).InterfaceAlias\r\nforeach ($name in @('Wi-Fi', 'Ethernet')) {\r\n    if ($interfaces -contains $name) {\r\n        netsh interface ipv4 set subinterface \"`\"$name`\"\" mtu=1500 store=persistent\r\n    }\r\n}\r\n\r\nWrite-Host \"Network tweaks applied successfully.\"\r\n",
+        "unapply": "Write-Host \"Reverting network tweaks to defaults...\"\r\n\r\n$ErrorActionPreference = 'SilentlyContinue'\r\n\r\nnetsh int tcp set heuristics enabled\r\nnetsh int tcp set supplemental template=internet congestionprovider=default\r\nnetsh int tcp set global rss=default\r\nnetsh int tcp set global ecncapability=default\r\nnetsh int tcp set global timestamps=default\r\nnetsh int tcp set global fastopen=default\r\nnetsh int tcp set global fastopenfallback=default\r\nnetsh int tcp set supplemental template=custom icw=4\r\n\r\n# MTU: only apply to interfaces that exist\r\n$interfaces = (Get-NetIPInterface -AddressFamily IPv4 -ErrorAction SilentlyContinue).InterfaceAlias\r\nforeach ($name in @('Wi-Fi', 'Ethernet')) {\r\n    if ($interfaces -contains $name) {\r\n        netsh interface ipv4 set subinterface \"`\"$name`\"\" mtu=1500 store=persistent\r\n    }\r\n}\r\n\r\nWrite-Host \"Network tweaks reverted to defaults.\"\r\n"
+      }
+    },
+    {
+      "id": "optimize-nvidia-settings",
+      "title": {
+        "vi": "Tối ưu cài đặt NVIDIA",
+        "en": "Optimize NVIDIA Settings"
+      },
+      "description": {
+        "vi": "Áp dụng các cài đặt NVIDIA được khuyến nghị để tối ưu hiệu suất chơi game và giảm độ trễ.",
+        "en": "Applies recommended NVIDIA settings for optimal gaming performance and reduced latency."
+      },
+      "category": [
+        "Performance",
+        "GPU",
+        "Gaming"
+      ],
+      "recommended": false,
+      "reversible": false,
+      "docsurl": "https://docs.getvie.net/tweaks/optimize-nvidia-settings",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/optimize-nvidia-settings/meta.json",
+      "scripts": {
+        "apply": "Write-Host \"Applying NVIDIA optimization settings...\"\r\n\r\n$ErrorActionPreference = 'SilentlyContinue'\r\n\r\n# Function to check for NVIDIA GPU presence\r\nfunction Test-NvidiaGpuPresence {\r\n    $nvidiaGpu = Get-PnpDevice -Class Display -Status OK | Where-Object { $_.FriendlyName -like \"*NVIDIA*\" }\r\n    if ($nvidiaGpu) {\r\n        return $true\r\n    } else {\r\n        return $false\r\n    }\r\n}\r\n\r\nif (-not (Test-NvidiaGpuPresence)) {\r\n    Write-Host \"Bạn không có card đồ họa Nvidia\"\r\n    exit 1\r\n}\r\n# Function to set NVIDIA registry keys\r\nfunction Set-NvidiaRegistryKey {\r\n    param (\r\n        [string]$Path,\r\n        [string]$Name,\r\n        [string]$Value,\r\n        [string]$Type = \"DWord\"\r\n    )\r\n    $fullPath = \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\Video\\\"\r\n    Get-ChildItem -Path $fullPath -Recurse -ErrorAction SilentlyContinue | Where-Object { $_.PSIsContainer -and $_.Name -match \"0000$\" } | ForEach-Object {\r\n        $driverPath = Join-Path $_.PSPath \"0000\"\r\n        if (-not (Test-Path $driverPath)) {\r\n            New-Item -Path $driverPath -Force | Out-Null\r\n        }\r\n        Set-ItemProperty -Path $driverPath -Name $Name -Value $Value -Type $Type -ErrorAction SilentlyContinue\r\n        Write-Host \"  Set $($Name) to $($Value) in $($driverPath)\"\r\n    }\r\n}\r\n\r\n# 1. Power Management Mode: Prefer Maximum Performance (Value: 1)\r\n#    Ensures the GPU always runs at its highest clock speeds.\r\nSet-NvidiaRegistryKey -Name \"PowerMizerEnable\" -Value \"1\"\r\nSet-NvidiaRegistryKey -Name \"PowerMizerDefault\" -Value \"1\"\r\nSet-NvidiaRegistryKey -Name \"PowerMizerLevel\" -Value \"1\"\r\nSet-NvidiaRegistryKey -Name \"PowerMizerLevelAC\" -Value \"1\"\r\nSet-NvidiaRegistryKey -Name \"PowerMizerLevelDC\" -Value \"1\"\r\n\r\n# 2. Texture Filtering Quality: High Performance (Value: 20)\r\n#    Prioritizes performance over visual quality for texture filtering.\r\nSet-NvidiaRegistryKey -Name \"TextureFilterQuality\" -Value \"20\"\r\n\r\n# 3. Low Latency Mode: Ultra (Value: 3)\r\n#    Reduces input lag by submitting frames just in time for the GPU to render.\r\nSet-NvidiaRegistryKey -Name \"LowLatencyMode\" -Value \"3\"\r\n\r\n# 4. Shader Cache: On (Value: 1)\r\n#    Allows the driver to store compiled shaders on disk, reducing stutter and load times.\r\nSet-NvidiaRegistryKey -Name \"ShaderCache\" -Value \"1\"\r\n\r\n# 5. Threaded Optimization: On (Value: 1)\r\n#    Enables multi-threaded optimization for modern multi-core CPUs.\r\nSet-NvidiaRegistryKey -Name \"ThreadedOptimization\" -Value \"1\"\r\n\r\n# 6. Vertical Sync (V-Sync): Off (Value: 0)\r\n#    Disables V-Sync to uncap frame rates and reduce input lag (may cause screen tearing).\r\nSet-NvidiaRegistryKey -Name \"VSync\" -Value \"0\"\r\n\r\nWrite-Host \"NVIDIA optimization settings applied successfully.\"",
+        "unapply": null
+      }
+    },
+    {
+      "id": "remove-gaming-apps",
+      "title": {
+        "vi": "Gỡ ứng dụng game rác",
+        "en": "Remove Gaming Bloat"
+      },
+      "description": {
+        "vi": "Gỡ bỏ các ứng dụng dùng thử Xbox không cần thiết.",
+        "en": "Removes Xbox trial apps and overlays."
+      },
+      "category": [
+        "Performance",
+        "Privacy"
+      ],
+      "recommended": false,
+      "reversible": false,
+      "docsurl": "https://docs.getvie.net/tweaks/remove-gaming-apps",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/remove-gaming-apps/meta.json",
+      "scripts": {
+        "apply": "$appsList = 'Microsoft.GamingApp', 'Microsoft.XboxGameOverlay', 'Microsoft.XboxGamingOverlay'\r\n\r\nforeach ($app in $appsList) {\r\n    Get-AppxPackage -Name $app -AllUsers | Remove-AppxPackage\r\n    Get-AppxProvisionedPackage -Online | Where-Object DisplayName -EQ $app | Remove-AppxProvisionedPackage -Online\r\n}\r\n",
+        "unapply": null
+      }
+    },
+    {
+      "id": "remove-onedrive",
+      "title": {
+        "vi": "Gỡ OneDrive",
+        "en": "Remove OneDrive"
+      },
+      "description": {
+        "vi": "Gỡ bỏ hoàn toàn OneDrive khỏi hệ thống.",
+        "en": "Uninstalls OneDrive completely."
+      },
+      "category": [
+        "Performance",
+        "General",
+        "Privacy"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/remove-onedrive",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/remove-onedrive/meta.json",
+      "scripts": {
+        "apply": "$OneDrivePath = $($env:OneDrive)\r\n        Write-Host \"Removing OneDrive\"\r\n        $regPath = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\OneDriveSetup.exe\"\r\n        if (Test-Path $regPath) {\r\n            $OneDriveUninstallString = Get-ItemPropertyValue \"$regPath\" -Name \"UninstallString\"\r\n            $OneDriveExe, $OneDriveArgs = $OneDriveUninstallString.Split(\" \")\r\n            Start-Process -FilePath $OneDriveExe -ArgumentList \"$OneDriveArgs /silent\" -NoNewWindow -Wait\r\n        } else {\r\n            Write-Host \"Onedrive dosn't seem to be installed anymore\" -ForegroundColor Red\r\n            return\r\n        }\r\n        # Check if OneDrive got Uninstalled\r\n        if (-not (Test-Path $regPath)) {\r\n        Write-Host \"Copy downloaded Files from the OneDrive Folder to Root UserProfile\"\r\n        Start-Process -FilePath powershell -ArgumentList \"robocopy '$($OneDrivePath)' '$($env:USERPROFILE.TrimEnd())\\' /mov /e /xj\" -NoNewWindow -Wait\r\n  \r\n        Write-Host \"Removing OneDrive leftovers\"\r\n        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue \"$env:localappdata\\Microsoft\\OneDrive\"\r\n        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue \"$env:localappdata\\OneDrive\"\r\n        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue \"$env:programdata\\Microsoft OneDrive\"\r\n        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue \"$env:systemdrive\\OneDriveTemp\"\r\n        reg delete \"HKEY_CURRENT_USER\\Software\\Microsoft\\OneDrive\" -f\r\n        # check if directory is empty before removing:\r\n        If ((Get-ChildItem \"$OneDrivePath\" -Recurse | Measure-Object).Count -eq 0) {\r\n            Remove-Item -Recurse -Force -ErrorAction SilentlyContinue \"$OneDrivePath\"\r\n        }\r\n  \r\n        Write-Host \"Remove Onedrive from explorer sidebar\"\r\n        Set-ItemProperty -Path \"HKCR:\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\" -Name \"System.IsPinnedToNameSpaceTree\" -Value 0\r\n        Set-ItemProperty -Path \"HKCR:\\Wow6432Node\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\" -Name \"System.IsPinnedToNameSpaceTree\" -Value 0\r\n  \r\n        Write-Host \"Removing run hook for new users\"\r\n        reg load \"hku\\Default\" \"C:\\Users\\Default\\NTUSER.DAT\"\r\n        reg delete \"HKEY_USERS\\Default\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\" /v \"OneDriveSetup\" /f\r\n        reg unload \"hku\\Default\"\r\n  \r\n        Write-Host \"Removing startmenu entry\"\r\n        Remove-Item -Force -ErrorAction SilentlyContinue \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\OneDrive.lnk\"\r\n  \r\n        Write-Host \"Removing scheduled task\"\r\n        Get-ScheduledTask -TaskPath '\\' -TaskName 'OneDrive*' -ea SilentlyContinue | Unregister-ScheduledTask -Confirm:$false\r\n  \r\n        # Add Shell folders restoring default locations\r\n        Write-Host \"Shell Fixing\"\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"AppData\" -Value \"$env:userprofile\\AppData\\Roaming\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Cache\" -Value \"$env:userprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Cookies\" -Value \"$env:userprofile\\AppData\\Local\\Microsoft\\Windows\\INetCookies\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Favorites\" -Value \"$env:userprofile\\Favorites\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"History\" -Value \"$env:userprofile\\AppData\\Local\\Microsoft\\Windows\\History\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Local AppData\" -Value \"$env:userprofile\\AppData\\Local\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"My Music\" -Value \"$env:userprofile\\Music\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"My Video\" -Value \"$env:userprofile\\Videos\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"NetHood\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"PrintHood\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Printer Shortcuts\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Programs\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Recent\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Recent\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"SendTo\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\SendTo\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Start Menu\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Startup\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Templates\" -Value \"$env:userprofile\\AppData\\Roaming\\Microsoft\\Windows\\Templates\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"{374DE290-123F-4565-9164-39C4925E467B}\" -Value \"$env:userprofile\\Downloads\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Desktop\" -Value \"$env:userprofile\\Desktop\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"My Pictures\" -Value \"$env:userprofile\\Pictures\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"Personal\" -Value \"$env:userprofile\\Documents\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"{F42EE2D3-909F-4907-8871-4C22FC0BF756}\" -Value \"$env:userprofile\\Documents\" -Type ExpandString\r\n        Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders\" -Name \"{0DDD015D-B06C-45D5-8C4C-F59713854639}\" -Value \"$env:userprofile\\Pictures\" -Type ExpandString\r\n        Write-Host \"Restarting explorer\"\r\n        taskkill.exe /F /IM \"explorer.exe\"\r\n        Start-Process \"explorer.exe\"\r\n  \r\n        Write-Host \"Waiting for explorer to complete loading\"\r\n        Write-Host \"Please Note - The OneDrive folder at $OneDrivePath may still have items in it. You must manually delete it, but all the files should already be copied to the base user folder.\"\r\n        Write-Host \"If there are Files missing afterwards, please Login to Onedrive.com and Download them manually\" -ForegroundColor Yellow\r\n        Start-Sleep 5\r\n        } else {\r\n        Write-Host \"Something went Wrong during the Unistallation of OneDrive\" -ForegroundColor Red\r\n        }",
+        "unapply": "Write-Host \"Install OneDrive\"\r\nStart-Process -FilePath winget -ArgumentList \"install -e --accept-source-agreements --accept-package-agreements --silent Microsoft.OneDrive \" -NoNewWindow -Wait"
+      }
+    },
+    {
+      "id": "revert-context-menu",
+      "title": {
+        "vi": "Menu chuột phải cũ",
+        "en": "Classic Context Menu"
+      },
+      "description": {
+        "vi": "Khôi phục menu chuột phải kiểu Windows 10.",
+        "en": "Restores the Windows 10 style context menu."
+      },
+      "category": [
+        "General",
+        "Appearance"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/revert-context-menu",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/revert-context-menu/meta.json",
+      "scripts": {
+        "apply": "New-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Name \"InprocServer32\" -force -value \"\"\r\nStop-Process -Name \"explorer\" -Force\r\nStart-Process \"explorer.exe\"",
+        "unapply": "Remove-Item -Path \"HKCU:\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\" -Recurse -Confirm:$false -Force\r\nStop-Process -Name \"explorer\" -Force\r\nStart-Process \"explorer.exe\""
+      }
+    },
+    {
+      "id": "run-disk-cleanup",
+      "title": {
+        "vi": "Dọn dẹp ổ đĩa",
+        "en": "Run Disk Cleanup"
+      },
+      "description": {
+        "vi": "Chạy công cụ dọn dẹp ổ đĩa của Windows.",
+        "en": "Runs native Disk Cleanup utility."
+      },
+      "category": [
+        "General",
+        "Performance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/run-disk-cleanup",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/run-disk-cleanup/meta.json",
+      "scripts": {
+        "apply": "cleanmgr.exe /d C: /VERYLOWDISK\r\nDism.exe /online /Cleanup-Image /StartComponentCleanup /ResetBase",
+        "unapply": null
+      }
+    },
+    {
+      "id": "set-powershell7-default",
+      "title": {
+        "vi": "Dùng PowerShell 7 mặc định",
+        "en": "Set PowerShell 7 Default"
+      },
+      "description": {
+        "vi": "Đặt PowerShell 7 (nếu có) làm mặc định.",
+        "en": "Sets PS7 as the default terminal shell."
+      },
+      "category": [
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/set-powershell7-default",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/set-powershell7-default/meta.json",
+      "scripts": {
+        "apply": "if (Test-Path -Path \"$env:ProgramFiles\\PowerShell\\7\") {\r\n    Write-Host \"PowerShell 7 is already installed.\"\r\n} else {\r\n    Write-Host \"Installing PowerShell 7...\"\r\n    winget install --id Microsoft.PowerShell --silent\r\n}\r\n\r\n$targetTerminalName = \"PowerShell\"\r\n\r\nif (-not (Get-Command \"wt\" -ErrorAction SilentlyContinue)) {\r\n    Write-Host \"Windows Terminal not installed. Exiting...\"\r\n    exit\r\n}\r\n\r\n$settingsPath = \"$env:LOCALAPPDATA\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json\"\r\nif (-not (Test-Path -Path $settingsPath)) {\r\n    Write-Host \"Windows Terminal settings.json not found.\"\r\n    exit\r\n}\r\n\r\n$settingsContent = Get-Content -Path $settingsPath | ConvertFrom-Json\r\n$ps7Profile = $settingsContent.profiles.list | Where-Object { $_.name -eq $targetTerminalName }\r\n\r\nif ($ps7Profile) {\r\n    $settingsContent.defaultProfile = $ps7Profile.guid\r\n    $settingsContent | ConvertTo-Json -Depth 100 | Set-Content -Path $settingsPath\r\n    Write-Host \"Default profile set to PowerShell 7\"\r\n} else {\r\n    Write-Host \"No PowerShell 7 profile found.\"\r\n}\r\n",
+        "unapply": "$targetTerminalName = \"Windows PowerShell\"\r\n\r\nif (-not (Get-Command \"wt\" -ErrorAction SilentlyContinue)) {\r\n    Write-Host \"Windows Terminal not installed. Exiting...\"\r\n    exit\r\n}\r\n\r\n$settingsPath = \"$env:LOCALAPPDATA\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState\\settings.json\"\r\nif (-not (Test-Path -Path $settingsPath)) {\r\n    Write-Host \"Windows Terminal settings.json not found.\"\r\n    exit\r\n}\r\n\r\n$settingsContent = Get-Content -Path $settingsPath | ConvertFrom-Json\r\n$ps5Profile = $settingsContent.profiles.list | Where-Object { $_.name -eq $targetTerminalName }\r\n\r\nif ($ps5Profile) {\r\n    $settingsContent.defaultProfile = $ps5Profile.guid\r\n    $settingsContent | ConvertTo-Json -Depth 100 | Set-Content -Path $settingsPath\r\n    Write-Host \"Default profile reverted to PowerShell 5\"\r\n} else {\r\n    Write-Host \"No Windows PowerShell profile found.\"\r\n}\r\n"
+      }
+    },
+    {
+      "id": "set-services-to-manual",
+      "title": {
+        "vi": "Chuyển Services sang Manual",
+        "en": "Set Services to Manual"
+      },
+      "description": {
+        "vi": "Chuyển các dịch vụ không cần thiết sang khởi động thủ công.",
+        "en": "Sets unnecessary services to Manual start."
+      },
+      "category": [
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/set-services-to-manual",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/set-services-to-manual/meta.json",
+      "scripts": {
+        "apply": "      $services = @(\r\n      @{ Name = \"AJRouter\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"ALG\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppIDSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppMgmt\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppReadiness\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppVClient\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"AppXSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Appinfo\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AssignedAccessManagerSvc\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"AudioEndpointBuilder\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"AudioSrv\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Audiosrv\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"AxInstSV\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BDESVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BFE\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"BITS\"; StartupType = \"AutomaticDelayedStart\" },\r\n      @{ Name = \"BTAGService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BcastDVRUserService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BluetoothUserService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BrokerInfrastructure\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Browser\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BthAvctpSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"BthHFSrv\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CDPSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CDPUserSvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"COMSysApp\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CaptureService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CertPropSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ClipSVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ConsentUxUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CoreMessagingRegistrar\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CredentialEnrollmentManagerUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CryptSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CscService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DPS\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DcomLaunch\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DcpSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DevQueryBroker\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DeviceAssociationBrokerSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DeviceAssociationService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DeviceInstall\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DevicePickerUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DevicesFlowUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Dhcp\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DiagTrack\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"DialogBlockingService\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"DispBrokerDesktopSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DisplayEnhancementService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DmEnrollmentSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Dnscache\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DoSvc\"; StartupType = \"AutomaticDelayedStart\" },\r\n      @{ Name = \"DsSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DsmSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DusmSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"EFS\"; StartupType = \"Manual\" },\r\n      @{ Name = \"EapHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"EntAppSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"EventLog\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"EventSystem\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"FDResPub\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Fax\"; StartupType = \"Manual\" },\r\n      @{ Name = \"FontCache\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"FrameServer\"; StartupType = \"Manual\" },\r\n      @{ Name = \"FrameServerMonitor\"; StartupType = \"Manual\" },\r\n      @{ Name = \"GraphicsPerfSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"HomeGroupListener\"; StartupType = \"Manual\" },\r\n      @{ Name = \"HomeGroupProvider\"; StartupType = \"Manual\" },\r\n      @{ Name = \"HvHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"IEEtwCollectorService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"IKEEXT\"; StartupType = \"Manual\" },\r\n      @{ Name = \"InstallService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"InventorySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"IpxlatCfgSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"KeyIso\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"KtmRm\"; StartupType = \"Manual\" },\r\n      @{ Name = \"LSM\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"LanmanServer\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"LanmanWorkstation\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"LicenseManager\"; StartupType = \"Manual\" },\r\n      @{ Name = \"LxpSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MSDTC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MSiSCSI\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MapsBroker\"; StartupType = \"AutomaticDelayedStart\" },\r\n      @{ Name = \"McpManagementService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MessagingService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MicrosoftEdgeElevationService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MixedRealityOpenXRSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MpsSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"MsKeyboardFilter\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NPSMSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NaturalAuthentication\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NcaSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NcbService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NcdAutoSetup\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NetSetupSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NetTcpPortSharing\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"Netlogon\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Netman\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NgcCtnrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NgcSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NlaSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"OneSyncSvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"P9RdrService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PNRPAutoReg\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PNRPsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PcaSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PeerDistSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PenService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PerfHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PhoneSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PimIndexMaintenanceSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PlugPlay\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PolicyAgent\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Power\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"PrintNotify\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PrintWorkflowUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ProfSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"PushToInstall\"; StartupType = \"Manual\" },\r\n      @{ Name = \"QWAVE\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RasAuto\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RasMan\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RemoteAccess\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"RemoteRegistry\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"RetailDemo\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RmSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RpcEptMapper\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"RpcLocator\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RpcSs\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SCPolicySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SCardSvr\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SDRSVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SEMgrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SENS\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SNMPTRAP\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SNMPTrap\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SSDPSRV\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SamSs\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"ScDeviceEnum\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Schedule\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SecurityHealthService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Sense\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SensorDataService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SensorService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SensrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SessionEnv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SgrmBroker\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SharedAccess\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SharedRealitySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ShellHWDetection\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SmsRouter\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Spooler\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SstpSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"StateRepository\"; StartupType = \"Manual\" },\r\n      @{ Name = \"StiSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"StorSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SysMain\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SystemEventsBroker\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TabletInputService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TapiSrv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TermService\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TextInputManagementService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Themes\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TieringEngineService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TimeBroker\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TimeBrokerSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TokenBroker\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TrkWks\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TroubleshootingSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TrustedInstaller\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UI0Detect\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UdkUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UevAgentService\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"UmRdpService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UnistoreSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UserDataSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UserManager\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"UsoSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"VGAuthService\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"VMTools\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"VSS\"; StartupType = \"Manual\" },\r\n      @{ Name = \"VacSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"VaultSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"W32Time\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WEPHOSTSVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WFDSConMgrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WMPNetworkSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WManSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WPDBusEnum\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WSService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WSearch\"; StartupType = \"AutomaticDelayedStart\" },\r\n      @{ Name = \"WaaSMedicSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WalletService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WarpJITSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WbioSrvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Wcmsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WcsPlugInService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WdNisSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WdiServiceHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WdiSystemHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WebClient\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Wecsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WerSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WiaRpc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WinDefend\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WinHttpAutoProxySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WinRM\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Winmgmt\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WlanSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WpcMonSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WpnService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WpnUserService_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"XblAuthManager\"; StartupType = \"Manual\" },\r\n      @{ Name = \"XblGameSave\"; StartupType = \"Manual\" },\r\n      @{ Name = \"XboxGipSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"XboxNetApiSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"autotimesvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"bthserv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"camsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"cbdhsvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"cloudidsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"dcsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"defragsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"diagnosticshub.standardcollector.service\"; StartupType = \"Manual\" },\r\n      @{ Name = \"diagsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"dmwappushservice\"; StartupType = \"Manual\" },\r\n      @{ Name = \"dot3svc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"edgeupdate\"; StartupType = \"Manual\" },\r\n      @{ Name = \"edgeupdatem\"; StartupType = \"Manual\" },\r\n      @{ Name = \"embeddedmode\"; StartupType = \"Manual\" },\r\n      @{ Name = \"fdPHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"fhsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"gpsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"hidserv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"icssvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"iphlpsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"lfsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"lltdsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"lmhosts\"; StartupType = \"Manual\" },\r\n      @{ Name = \"mpssvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"msiserver\"; StartupType = \"Manual\" },\r\n      @{ Name = \"netprofm\"; StartupType = \"Manual\" },\r\n      @{ Name = \"nsi\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"p2pimsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"p2psvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"perceptionsimulation\"; StartupType = \"Manual\" },\r\n      @{ Name = \"pla\"; StartupType = \"Manual\" },\r\n      @{ Name = \"seclogon\"; StartupType = \"Manual\" },\r\n      @{ Name = \"shpamsvc\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"smphost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"spectrum\"; StartupType = \"Manual\" },\r\n      @{ Name = \"sppsvc\"; StartupType = \"AutomaticDelayedStart\" },\r\n      @{ Name = \"ssh-agent\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"svsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"swprv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"tiledatamodelsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"tzautoupdate\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"uhssvc\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"upnphost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vds\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vm3dservice\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicguestinterface\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicheartbeat\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmickvpexchange\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicrdv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicshutdown\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmictimesync\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicvmsession\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicvss\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmvss\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wbengine\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wcncsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"webthreatdefsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"webthreatdefusersvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"wercplsupport\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wisvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wlidsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wlpasvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wmiApSrv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"workfolderssvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wscsvc\"; StartupType = \"AutomaticDelayedStart\" },\r\n      @{ Name = \"wuauserv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wudfsvc\"; StartupType = \"Manual\" }\r\n  )\r\n\r\n  foreach ($svc in $services) {\r\n    try {\r\n        Set-Service -Name $svc.Name -StartupType $svc.StartupType -ErrorAction Stop\r\n        Write-Output \"Set $($svc.Name) to $($svc.StartupType)\"\r\n    } catch {\r\n        Write-Warning \"Failed to set $($svc.Name): $_\"\r\n    }\r\n}",
+        "unapply": "$services = @(\r\n      @{ Name = \"AJRouter\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ALG\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppIDSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppMgmt\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppReadiness\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AppVClient\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"AppXSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Appinfo\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AssignedAccessManagerSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"AudioEndpointBuilder\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"AudioSrv\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Audiosrv\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"AxInstSV\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BDESVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BFE\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"BITS\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"BTAGService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BcastDVRUserService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BluetoothUserService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BrokerInfrastructure\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Browser\"; StartupType = \"Manual\" },\r\n      @{ Name = \"BthAvctpSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"BthHFSrv\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CDPSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CDPUserSvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"COMSysApp\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CaptureService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CertPropSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ClipSVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ConsentUxUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CoreMessagingRegistrar\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CredentialEnrollmentManagerUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"CryptSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"CscService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DPS\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DcomLaunch\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DcpSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DevQueryBroker\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DeviceAssociationBrokerSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DeviceAssociationService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DeviceInstall\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DevicePickerUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DevicesFlowUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Dhcp\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DiagTrack\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DialogBlockingService\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"DispBrokerDesktopSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DisplayEnhancementService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DmEnrollmentSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Dnscache\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DoSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"DsSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DsmSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"DusmSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"EFS\"; StartupType = \"Manual\" },\r\n      @{ Name = \"EapHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"EntAppSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"EventLog\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"EventSystem\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"FDResPub\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Fax\"; StartupType = \"Manual\" },\r\n      @{ Name = \"FontCache\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"FrameServer\"; StartupType = \"Manual\" },\r\n      @{ Name = \"FrameServerMonitor\"; StartupType = \"Manual\" },\r\n      @{ Name = \"GraphicsPerfSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"HomeGroupListener\"; StartupType = \"Manual\" },\r\n      @{ Name = \"HomeGroupProvider\"; StartupType = \"Manual\" },\r\n      @{ Name = \"HvHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"IEEtwCollectorService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"IKEEXT\"; StartupType = \"Manual\" },\r\n      @{ Name = \"InstallService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"InventorySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"IpxlatCfgSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"KeyIso\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"KtmRm\"; StartupType = \"Manual\" },\r\n      @{ Name = \"LSM\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"LanmanServer\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"LanmanWorkstation\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"LicenseManager\"; StartupType = \"Manual\" },\r\n      @{ Name = \"LxpSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MSDTC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MSiSCSI\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MapsBroker\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"McpManagementService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MessagingService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MicrosoftEdgeElevationService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MixedRealityOpenXRSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"MpsSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"MsKeyboardFilter\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"NPSMSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NaturalAuthentication\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NcaSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NcbService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NcdAutoSetup\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NetSetupSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NetTcpPortSharing\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"Netlogon\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Netman\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NgcCtnrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NgcSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"NlaSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"OneSyncSvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"P9RdrService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PNRPAutoReg\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PNRPsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PcaSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"PeerDistSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PenService_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PerfHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PhoneSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PimIndexMaintenanceSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PlugPlay\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PolicyAgent\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Power\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"PrintNotify\"; StartupType = \"Manual\" },\r\n      @{ Name = \"PrintWorkflowUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ProfSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"PushToInstall\"; StartupType = \"Manual\" },\r\n      @{ Name = \"QWAVE\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RasAuto\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RasMan\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RemoteAccess\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"RemoteRegistry\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"RetailDemo\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RmSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RpcEptMapper\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"RpcLocator\"; StartupType = \"Manual\" },\r\n      @{ Name = \"RpcSs\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SCPolicySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SCardSvr\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SDRSVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SEMgrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SENS\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SNMPTRAP\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SNMPTrap\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SSDPSRV\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SamSs\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"ScDeviceEnum\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Schedule\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SecurityHealthService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Sense\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SensorDataService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SensorService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SensrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SessionEnv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SgrmBroker\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SharedAccess\"; StartupType = \"Manual\" },\r\n      @{ Name = \"SharedRealitySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"ShellHWDetection\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SmsRouter\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Spooler\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SstpSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"StateRepository\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"StiSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"StorSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SysMain\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"SystemEventsBroker\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TabletInputService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TapiSrv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TermService\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TextInputManagementService\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"Themes\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TieringEngineService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TimeBroker\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TimeBrokerSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TokenBroker\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TrkWks\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"TroubleshootingSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"TrustedInstaller\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UI0Detect\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UdkUserSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UevAgentService\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"UmRdpService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UnistoreSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UserDataSvc_*\"; StartupType = \"Manual\" },\r\n      @{ Name = \"UserManager\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"UsoSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"VGAuthService\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"VMTools\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"VSS\"; StartupType = \"Manual\" },\r\n      @{ Name = \"VacSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"VaultSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"W32Time\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WEPHOSTSVC\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WFDSConMgrSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WMPNetworkSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WManSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WPDBusEnum\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WSService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WSearch\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WaaSMedicSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WalletService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WarpJITSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WbioSrvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Wcmsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WcsPlugInService\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WdNisSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WdiServiceHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WdiSystemHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WebClient\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Wecsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WerSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WiaRpc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WinDefend\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WinHttpAutoProxySvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WinRM\"; StartupType = \"Manual\" },\r\n      @{ Name = \"Winmgmt\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WlanSvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WpcMonSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"WpnService\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"WpnUserService_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"XblAuthManager\"; StartupType = \"Manual\" },\r\n      @{ Name = \"XblGameSave\"; StartupType = \"Manual\" },\r\n      @{ Name = \"XboxGipSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"XboxNetApiSvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"autotimesvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"bthserv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"camsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"cbdhsvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"cloudidsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"dcsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"defragsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"diagnosticshub.standardcollector.service\"; StartupType = \"Manual\" },\r\n      @{ Name = \"diagsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"dmwappushservice\"; StartupType = \"Manual\" },\r\n      @{ Name = \"dot3svc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"edgeupdate\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"edgeupdatem\"; StartupType = \"Manual\" },\r\n      @{ Name = \"embeddedmode\"; StartupType = \"Manual\" },\r\n      @{ Name = \"fdPHost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"fhsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"gpsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"hidserv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"icssvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"iphlpsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"lfsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"lltdsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"lmhosts\"; StartupType = \"Manual\" },\r\n      @{ Name = \"mpssvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"msiserver\"; StartupType = \"Manual\" },\r\n      @{ Name = \"netprofm\"; StartupType = \"Manual\" },\r\n      @{ Name = \"nsi\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"p2pimsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"p2psvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"perceptionsimulation\"; StartupType = \"Manual\" },\r\n      @{ Name = \"pla\"; StartupType = \"Manual\" },\r\n      @{ Name = \"seclogon\"; StartupType = \"Manual\" },\r\n      @{ Name = \"shpamsvc\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"smphost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"spectrum\"; StartupType = \"Manual\" },\r\n      @{ Name = \"sppsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"ssh-agent\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"svsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"swprv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"tiledatamodelsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"tzautoupdate\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"uhssvc\"; StartupType = \"Disabled\" },\r\n      @{ Name = \"upnphost\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vds\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vm3dservice\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"vmicguestinterface\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicheartbeat\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmickvpexchange\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicrdv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicshutdown\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmictimesync\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicvmsession\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmicvss\"; StartupType = \"Manual\" },\r\n      @{ Name = \"vmvss\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wbengine\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wcncsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"webthreatdefsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"webthreatdefusersvc_*\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"wercplsupport\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wisvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wlidsvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wlpasvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wmiApSrv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"workfolderssvc\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wscsvc\"; StartupType = \"Automatic\" },\r\n      @{ Name = \"wuauserv\"; StartupType = \"Manual\" },\r\n      @{ Name = \"wudfsvc\"; StartupType = \"Manual\" }\r\n  )\r\n  \r\n  foreach ($svc in $services) {\r\n      try {\r\n          Set-Service -Name $svc.Name -StartupType $svc.StartupType -ErrorAction Stop\r\n          Write-Output \"Set $($svc.Name) to $($svc.StartupType)\"\r\n      } catch {\r\n          Write-Warning \"Failed to set $($svc.Name): $_\"\r\n      }\r\n  }\r\n     "
+      }
+    },
+    {
+      "id": "set-time-utc",
+      "title": {
+        "vi": "Đặt giờ UTC",
+        "en": "Set Time to UTC"
+      },
+      "description": {
+        "vi": "Đặt đồng hồ phần cứng sang UTC (tốt cho dual boot).",
+        "en": "Sets hardware clock to UTC (for dual boot)."
+      },
+      "category": [
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/set-time-utc",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/set-time-utc/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation\" -Name \"RealTimeIsUniversal\" -Value 1 -Type DWord -Force",
+        "unapply": "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation\" -Name \"RealTimeIsUniversal\" -Value 0 -Type DWord -Force"
+      }
+    },
+    {
+      "id": "set-win32-priority-separation",
+      "title": {
+        "vi": "Tối ưu ưu tiên CPU",
+        "en": "Optimize CPU Priority"
+      },
+      "description": {
+        "vi": "Điều chỉnh Win32PrioritySeparation để tăng độ phản hồi.",
+        "en": "Adjusts Win32PrioritySeparation for responsiveness."
+      },
+      "category": [
+        "Performance"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/set-win32-priority-separation",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/set-win32-priority-separation/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl\" -Name \"Win32PrioritySeparation\" -Type DWord -Value 36\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl\" -Name \"Win32PrioritySeparation\" -Type DWord -Value 2\r\n"
+      }
+    },
+    {
+      "id": "show-seconds-in-taskbar-clock",
+      "title": {
+        "vi": "Hiện giây đồng hồ",
+        "en": "Show Seconds in Clock"
+      },
+      "description": {
+        "vi": "Hiển thị thêm số giây ở đồng hồ hệ thống.",
+        "en": "Adds seconds to the system tray clock."
+      },
+      "category": [
+        "Appearance",
+        "General"
+      ],
+      "recommended": false,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/show-seconds-in-system-clock",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/show-seconds-in-system-clock/meta.json",
+      "scripts": {
+        "apply": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name \"ShowSecondsInSystemClock\" -Type DWord -Value 1\r\n\r\n# Restart Explorer to apply changes\r\nStop-Process -Name explorer -Force\r\nStart-Process explorer\r\n",
+        "unapply": "Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" -Name \"ShowSecondsInSystemClock\" -Type DWord -Value 0\r\n\r\n# Restart Explorer to apply changes\r\nStop-Process -Name explorer -Force\r\nStart-Process explorer\r\n"
+      }
+    },
+    {
+      "id": "ultimate-performance-plan",
+      "title": {
+        "vi": "Gói nguồn Ultimate",
+        "en": "Ultimate Performance Plan"
+      },
+      "description": {
+        "vi": "Kích hoạt gói nguồn Ultimate Performance.",
+        "en": "Enables Ultimate Performance power plan."
+      },
+      "category": [
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/ultimate-performance-plan",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/ultimate-performance-plan/meta.json",
+      "scripts": {
+        "apply": "$ultimatePlan = powercfg -l | Select-String \"Ultimate Performance\"\r\n  \r\n  if (-not $ultimatePlan) {\r\n      Write-Host \"Ultimate Performance plan not found. Creating...\" \r\n      powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61\r\n  } else {\r\n      Write-Host \"Ultimate Performance plan already exists.\" \r\n  }\r\n  \r\n  # Get the GUID of the Ultimate Performance plan\r\n  $ultimatePlanGUID = (powercfg -l | Select-String \"Ultimate Performance\").ToString().Split()[3]\r\n  \r\n  # Set it as the active plan\r\n  powercfg -setactive $ultimatePlanGUID\r\n  \r\n  Write-Host \"Ultimate Performance power plan is now active.\" ",
+        "unapply": "$balancedGUID = \"381b4222-f694-41f0-9685-ff5bb260df2e\"\r\n  \r\n  # check if the Balanced plan exists\r\n  $balancedExists = powercfg -l | Select-String $balancedGUID\r\n  \r\n  if ($balancedExists) {\r\n      powercfg -setactive $balancedGUID\r\n      Write-Host \"Balanced power plan is now active.\" \r\n  } else {\r\n      Write-Host \"Balanced power plan not found. Creating a new Balanced plan...\" \r\n      powercfg -duplicatescheme $balancedGUID\r\n      powercfg -setactive $balancedGUID\r\n      Write-Host \"Balanced power plan created and activated.\" \r\n  }"
+      }
+    },
+    {
+      "id": "vie-amx",
+      "title": {
+        "vi": "VieX 1.0.3",
+        "en": "VieX 1.0.3"
+      },
+      "description": {
+        "vi": "Áp dụng toàn bộ tối ưu hóa hệ thống (One-Click).",
+        "en": "Apply all system optimizations (One-Click)."
+      },
+      "category": [
+        "Remember",
+        "Performance",
+        "Gaming"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/vie-amx",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/vie-amx/meta.json",
+      "scripts": {
+        "apply": "<#\r\n.SYNOPSIS\r\n    AMX Ultimate Optimization Script for Windows 10/11/12\r\n    Includes Debloat, Network Optimization, DPC/ISR Latency Tweaks, and Cleanup.\r\n    \r\n    WARNING: Use at your own risk. Create a Restore Point before running!\r\n#>\r\n\r\n# --- REQUEST ADMIN PRIVILEGES ---\r\nif (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] \"Administrator\")) {\r\n    Start-Process powershell -Verb RunAs -ArgumentList (\"-File `\"$($MyInvocation.MyCommand.Path)`\"\")\r\n    exit\r\n}\r\n\r\nWrite-Host \"Initializing AMX Ultimate Tweaks...\" -ForegroundColor Cyan\r\n\r\n# --- 1. NETWORK OPTIMIZATION (Ping, MS, Throttling) ---\r\nWrite-Host \"Optimizing Network Adapter & Protocol...\" -ForegroundColor Green\r\n$Interfaces = Get-NetAdapter -Physical | Where-Object { $_.Status -eq 'Up' }\r\nforeach ($Interface in $Interfaces) {\r\n    # Disable Interrupt Moderation (Lower Latency)\r\n    Set-NetAdapterAdvancedProperty -Name $Interface.Name -DisplayName \"Interrupt Moderation\" -DisplayValue \"Disabled\" -ErrorAction SilentlyContinue\r\n    \r\n    # Disable Flow Control\r\n    Set-NetAdapterAdvancedProperty -Name $Interface.Name -DisplayName \"Flow Control\" -DisplayValue \"Disabled\" -ErrorAction SilentlyContinue\r\n\r\n    # Disable Jumbo Packet\r\n    Set-NetAdapterAdvancedProperty -Name $Interface.Name -DisplayName \"Jumbo Packet\" -DisplayValue \"Disabled\" -ErrorAction SilentlyContinue\r\n}\r\n\r\n# TCP Optimization\r\nnetsh int tcp set global autotuninglevel=normal\r\nnetsh int tcp set global rss=enabled\r\nnetsh int tcp set global rsc=disabled\r\nnetsh int tcp set global ecncapability=disabled\r\nnetsh int tcp set global timestamps=disabled\r\nnetsh int tcp set global initialrto=2000\r\nnetsh int tcp set global nonsackrttresiliency=disabled\r\nnetsh int tcp set global maxsynretransmissions=2\r\n\r\n# Registry Network Tweaks\r\n$TcpParams = \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\"\r\n$TcpInterfaceParams = \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters\\Interfaces\"\r\n\r\nSet-ItemProperty -Path $TcpParams -Name \"TcpTimedWaitDelay\" -Value 30 -Type DWord -ErrorAction SilentlyContinue\r\nSet-ItemProperty -Path $TcpParams -Name \"MaxUserPort\" -Value 65534 -Type DWord -ErrorAction SilentlyContinue\r\nSet-ItemProperty -Path $TcpParams -Name \"TcpMaxDataRetransmissions\" -Value 3 -Type DWord -ErrorAction SilentlyContinue\r\nSet-ItemProperty -Path $TcpParams -Name \"SackOpts\" -Value 0 -Type DWord -ErrorAction SilentlyContinue\r\n\r\n# Apply to all interfaces (TCPNoDelay, TcpAckFrequency)\r\nGet-ChildItem $TcpInterfaceParams | ForEach-Object {\r\n    Set-ItemProperty -Path $_.PSPath -Name \"TcpAckFrequency\" -Value 1 -Type DWord -ErrorAction SilentlyContinue\r\n    Set-ItemProperty -Path $_.PSPath -Name \"TCPNoDelay\" -Value 1 -Type DWord -ErrorAction SilentlyContinue\r\n}\r\n\r\n# --- 2. DPC / ISR / LATENCY OPTIMIZATION ---\r\nWrite-Host \"Optimizing System Responsiveness (DPC/ISR)...\" -ForegroundColor Green\r\n\r\n# System Profile Tweaks\r\n$SystemProfile = \"HKLM:\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\"\r\nSet-ItemProperty -Path $SystemProfile -Name \"NetworkThrottlingIndex\" -Value 4294967295 -Type DWord -Force # FFFFFFFF (Disabled)\r\nSet-ItemProperty -Path $SystemProfile -Name \"SystemResponsiveness\" -Value 0 -Type DWord -Force\r\nSet-ItemProperty -Path $SystemProfile -Name \"NoLazyMode\" -Value 1 -Type DWord -Force\r\n\r\n# Games Priority\r\n$GamesPath = \"$SystemProfile\\Tasks\\Games\"\r\nif (Test-Path $GamesPath) {\r\n    Set-ItemProperty -Path $GamesPath -Name \"GPU Priority\" -Value 8 -Type DWord -Force\r\n    Set-ItemProperty -Path $GamesPath -Name \"Priority\" -Value 6 -Type DWord -Force\r\n    Set-ItemProperty -Path $GamesPath -Name \"Scheduling Category\" -Value \"High\" -Type String -Force\r\n    Set-ItemProperty -Path $GamesPath -Name \"SFIO Priority\" -Value \"High\" -Type String -Force\r\n}\r\n\r\n# Win32 Priority Separation (26 for Short intervals, variable, high priority foreground)\r\nSet-ItemProperty -Path \"HKLM:\\SYSTEM\\CurrentControlSet\\Control\\PriorityControl\" -Name \"Win32PrioritySeparation\" -Value 26 -Type DWord -Force\r\n\r\n# Disable Dynamic Ticking (Can improve latency on some systems)\r\n# bcdedit /set disabledynamictick yes\r\n# bcdedit /set useplatformclock no\r\n# bcdedit /set tscsyncpolicy Enhanced\r\n\r\n# --- 3. DEBLOAT & SERVICES ---\r\nWrite-Host \"Disabling Unnecessary Services & Telemetry...\" -ForegroundColor Green\r\n\r\n$ServicesToDisable = @(\r\n    \"DiagTrack\",                # Connected User Experiences and Telemetry\r\n    \"dmwappushservice\",         # WAP Push Message Routing Service\r\n    \"MapsBroker\",               # Downloaded Maps Manager\r\n    \"WbioSrvc\",                 # Windows Biometric Service (Optional: Enable if using Hello)\r\n    \"RetailDemo\",\r\n    \"MessagingService\",\r\n    \"XblGameSave\", \"XboxGipSvc\", \"XboxNetApiSvc\", \"XboxTCUI\", \"XblAuthManager\", # Xbox (Enable if Gamer)\r\n    \"PhoneSvc\",\r\n    \"Browser_Broker\",\r\n    \"wisvc\",                    # Windows Insider Service\r\n    \"ConnectedUserExperiences\",\r\n    \"OneSyncSvc\",\r\n    \"CDPSvc\", \"CDPUserSvc\",\r\n    \"SEMgrSvc\",                 # Payments and NFC\r\n    \"DusmSvc\",                  # Data Usage\r\n    \"WerSvc\",                   # Windows Error Reporting\r\n    \"PcaSvc\",                   # Program Compatibility Assistant\r\n    \"SysMain\"                   # Superfetch (Disable on SSD, Enable on HDD)\r\n)\r\n\r\nforeach ($Service in $ServicesToDisable) {\r\n    if (Get-Service $Service -ErrorAction SilentlyContinue) {\r\n        Stop-Service $Service -Force -ErrorAction SilentlyContinue\r\n        Set-Service  $Service -StartupType Disabled -ErrorAction SilentlyContinue\r\n        Write-Host \"Disabled: $Service\" -ForegroundColor DarkGray\r\n    }\r\n}\r\n\r\n# Disable Telemetry Tasks\r\n$TasksToDisablePatterns = @(\r\n    \"\\Microsoft\\Windows\\Customer Experience\\*\",\r\n    \"\\Microsoft\\Windows\\Application Experience\\ProgramDataUpdater\",\r\n    \"\\Microsoft\\Windows\\Feedback\\*\",\r\n    \"\\Microsoft\\Windows\\DiskDiagnostic\\*\",\r\n    \"\\Microsoft\\Windows\\Maps\\MapsUpdateTask\",\r\n    \"\\Microsoft\\Windows\\HelloFace\\*\",\r\n    \"\\Microsoft\\Windows\\Windows Error Reporting\\*\"\r\n)\r\n\r\nforeach ($TaskPattern in $TasksToDisablePatterns) {\r\n    Get-ScheduledTask | Where-Object { $_.TaskName -like \"*$TaskPattern*\" -or $_.TaskPath -like $TaskPattern } | Disable-ScheduledTask -ErrorAction SilentlyContinue | Out-Null\r\n}\r\n\r\n# Remove Bloatware Appx\r\n$AppxPackagesToRemove = @(\r\n    \"*BingWeather*\", \"*ZuneMusic*\", \"*ZuneVideo*\",\r\n    \"*People*\", \"*3DBuilder*\", \"*FeedbackHub*\",\r\n    \"*Microsoft.GetHelp*\", \"*Clipchamp*\", \"*SolitaireCollection*\",\r\n    \"*Microsoft3DViewer*\", \"*YourPhone*\"\r\n)\r\n\r\nWrite-Host \"Removing Bloatware Apps...\" -ForegroundColor Green\r\nforeach ($Appx in $AppxPackagesToRemove) {\r\n    Get-AppxPackage -AllUsers | Where-Object { $_.Name -like $Appx } | Remove-AppxPackage -AllUsers -ErrorAction SilentlyContinue\r\n}\r\n\r\n# --- 4. CLEANUP ---\r\nWrite-Host \"Performing System Cleanup...\" -ForegroundColor Green\r\nRemove-Item \"$env:TEMP\\*\" -Recurse -Force -ErrorAction SilentlyContinue\r\nRemove-Item \"$env:SystemRoot\\Temp\\*\" -Recurse -Force -ErrorAction SilentlyContinue\r\n# Clear DNS Cache\r\nClear-DnsClientCache\r\n\r\n# --- 5. VISUAL TWEAKS (Minimal) ---\r\n$RegCDM = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\"\r\nif (!(Test-Path $RegCDM)) { New-Item $RegCDM -Force | Out-Null }\r\nSet-ItemProperty $RegCDM \"SubscribedContent-338309Enabled\" 0 -ErrorAction SilentlyContinue\r\nSet-ItemProperty $RegCDM \"SubscribedContent-353694Enabled\" 0 -ErrorAction SilentlyContinue # Spotlight ads\r\n\r\n$RegExp = \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\"\r\nSet-ItemProperty $RegExp \"ShowSyncProviderNotifications\" 0 -ErrorAction SilentlyContinue # OneDrive Toast\r\n\r\nWrite-Host \"Optimization Complete! Please Restart Your Computer.\" -ForegroundColor Cyan\r\nStart-Sleep -Seconds 3",
+        "unapply": "$balancedGUID = \"381b4222-f694-41f0-9685-ff5bb260df2e\"\r\n  \r\n  # check if the Balanced plan exists\r\n  $balancedExists = powercfg -l | Select-String $balancedGUID\r\n  \r\n  if ($balancedExists) {\r\n      powercfg -setactive $balancedGUID\r\n      Write-Host \"Balanced power plan is now active.\" \r\n  } else {\r\n      Write-Host \"Balanced power plan not found. Creating a new Balanced plan...\" \r\n      powercfg -duplicatescheme $balancedGUID\r\n      powercfg -setactive $balancedGUID\r\n      Write-Host \"Balanced power plan created and activated.\" \r\n  }"
+      }
+    }
+  ]
+}
