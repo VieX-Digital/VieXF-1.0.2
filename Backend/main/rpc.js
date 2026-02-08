@@ -21,9 +21,9 @@ async function startDiscordRPC() {
           details: "VieXF - Fast Optimize",
           state: "OniiChan Baka",
           buttons: [
-             // keep this as parcoil incase of the domain going down
-            { label: "âœ¨Táº£i Xuá»‘ng VieXF", url: "https://viex.vercel.app/" },
-            { label: "âœ¨Tham Gia Discord", url: "https://discord.gg/VRAk33YzkE" },
+            // keep this as parcoil incase of the domain going down
+            { label: "✨ Tải xuống VieXF", url: "https://discord.gg/wsphWPp7Zr" },
+            { label: "✨ Tham Gia Discord", url: "https://discord.gg/VRAk33YzkE" },
           ],
           largeImageKey: "vie",
           largeImageText: "VieXF",
@@ -47,7 +47,7 @@ async function startDiscordRPC() {
       stopDiscordRPC()
     }
   }, 1000)
-  
+
   return true
 }
 
