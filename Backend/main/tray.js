@@ -32,13 +32,13 @@ export function createTray(mainWindow) {
     const { image, iconPath } = loadTrayIcon()
     tray = new Tray(image)
     if (iconPath) {
-      console.log(`[vie]: Tray icon loaded from: ${iconPath}`)
+      console.log(`[viexf]: Tray icon loaded from: ${iconPath}`)
     } else {
-      console.warn(`[vie]: Tray icon missing, using empty icon`)
+      console.warn(`[viexf]: Tray icon missing, using empty icon`)
     }
   } catch (error) {
-    console.error(`[vie]: Failed to load tray icon:`, error)
-    console.warn(`[vie]: Using fallback empty icon for tray`)
+    console.error(`[viexf]: Failed to load tray icon:`, error)
+    console.warn(`[viexf]: Using fallback empty icon for tray`)
     // Fallback: Create empty 16x16 transparent icon to prevent crash
     tray = new Tray(nativeImage.createEmpty())
   }
@@ -48,8 +48,13 @@ export function createTray(mainWindow) {
     { label: "Quit", click: () => app.quit() },
   ])
 
+<<<<<<< HEAD
   tray.setToolTip("VieX Optimizer")
   tray.setTitle("VieX Optimizer")
+=======
+  tray.setToolTip("VieXF Optimizer")
+  tray.setTitle("VieXF Optimizer")
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   tray.setContextMenu(contextMenu)
   tray.on("click", () => ToggleWindowState(mainWindow))
   return tray

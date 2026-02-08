@@ -24,7 +24,11 @@
   },
   "settings": {
     "title": "Settings",
+<<<<<<< HEAD
     "subtitle": "Customize your VieX experience",
+=======
+    "subtitle": "Customize your VieXF experience",
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
     "personalization": "Personalization",
     "accent_color": "Accent Color",
     "accent_desc": "Choose your preferred main color.",
@@ -39,7 +43,11 @@
     "run_admin": "Run as Administrator",
     "run_admin_desc": "Force app to always request admin privileges.",
     "show_tray_icon": "Show Tray Icon",
+<<<<<<< HEAD
     "show_tray_icon_desc": "Display VieX in the system tray when minimized.",
+=======
+    "show_tray_icon_desc": "Display VieXF in the system tray when minimized.",
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
     "unlock_fps_title": "Unlock FPS Limit",
     "unlock_fps_desc": "Join our Discord to get the exclusive FPS unlocker tool.",
     "get_tool": "Get Tool",

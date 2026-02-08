@@ -30,7 +30,7 @@ export default defineConfig({
     resolve: {
       alias: {
         "@renderer": resolve("Frontend/src"),
-        "@": path.resolve(__dirname, "Frontend/src"),
+        "@": resolve("Frontend/src"),
       },
     },
     plugins: [react()],

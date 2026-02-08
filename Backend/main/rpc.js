@@ -22,7 +22,11 @@ async function startDiscordRPC() {
           state: "OniiChan Baka",
           buttons: [
              // keep this as parcoil incase of the domain going down
+<<<<<<< HEAD
             { label: "✨Tải Xuống VieX", url: "https://viex.vercel.app/" },
+=======
+            { label: "✨Tải Xuống VieXF", url: "https://viex.vercel.app/" },
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
             { label: "✨Tham Gia Discord", url: "https://discord.gg/VRAk33YzkE" },
           ],
           largeImageKey: "vie",

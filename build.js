@@ -101,6 +101,11 @@ const shouldBuildApp = args.includes("--build") || args.length === 0
     } catch (error) {
       console.error(`⚠️  Failed to clean dist folder: ${error.message}`)
     }
-    buildElectron()
+    try {
+      buildElectron()
+    } catch (e) {
+      console.error("Build failed:", e)
+      process.exit(1)
+    }
   }
 })()

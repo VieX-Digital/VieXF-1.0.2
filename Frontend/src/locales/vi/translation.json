@@ -39,7 +39,11 @@
     "run_admin": "Chạy dưới quyền Admin",
     "run_admin_desc": "Buộc ứng dụng luôn yêu cầu quyền quản trị.",
     "show_tray_icon": "Hiển thị biểu tượng khay hệ thống",
+<<<<<<< HEAD
     "show_tray_icon_desc": "Hiển thị VieX trong khay hệ thống khi thu nhỏ.",
+=======
+    "show_tray_icon_desc": "Hiển thị VieXF trong khay hệ thống khi thu nhỏ.",
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
     "unlock_fps_title": "Mở khóa giới hạn FPS",
     "unlock_fps_desc": "Tham gia Discord để nhận công cụ mở khóa FPS độc quyền.",
     "get_tool": "Tải công cụ",

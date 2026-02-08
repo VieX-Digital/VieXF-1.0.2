@@ -45,7 +45,11 @@ export default function Titlebar() {
                 <div className="flex items-baseline gap-1.5 text-sm font-medium tracking-wide">
                     <span className="text-white font-bold font-display">VIE</span>
                     <span className="text-cyan-400 font-bold">XF</span>
+<<<<<<< HEAD
                     <span className="text-[10px] text-white/40 font-mono ml-1"></span>
+=======
+                    <span className="text-[10px] text-white/40 font-mono ml-1">v1.0.2</span>
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
                 </div>
             </div>
 

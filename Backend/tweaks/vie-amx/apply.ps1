@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 Set-StrictMode -Version Latest
+=======
+﻿Set-StrictMode -Version Latest
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
 $ErrorActionPreference = 'Stop'
 
 #region Logging / Elevation
@@ -177,7 +181,11 @@ try {
     try {
         Invoke-RegExe add 'HKLM\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore' '/v "SystemRestorePointCreationFrequency" /t REG_DWORD /d 0 /f'
         Enable-ComputerRestore -Drive "$env:SystemDrive\" -ErrorAction SilentlyContinue
+<<<<<<< HEAD
         Checkpoint-Computer -Description 'VieXF 1.0.0' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue
+=======
+        Checkpoint-Computer -Description 'VieXF 1.0.2' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue
+>>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
         Write-Log "Restore point request submitted."
     }
     catch {
