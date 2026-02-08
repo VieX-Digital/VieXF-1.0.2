@@ -663,8 +663,6 @@ try {
         @{ Name = "MsKeyboardFilter"; Start = "disabled" }
         @{ Name = "NaturalAuthentication"; Start = "disabled" }
         @{ Name = "NcbService"; Start = "disabled" }
-        @{ Name = "NgcCtnrSvc"; Start = "disabled" }
-        @{ Name = "NgcSvc"; Start = "disabled" }
         @{ Name = "NPSMSvc"; Start = "disabled" }
         @{ Name = "OneSyncSvc"; Start = "disabled" }
         @{ Name = "P9RdrService"; Start = "disabled" }
