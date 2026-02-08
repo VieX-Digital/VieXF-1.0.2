@@ -1,4 +1,4 @@
-﻿import { ipcMain, app } from "electron"
+import { ipcMain, app } from "electron"
 import fs from "fs/promises"
 import path from "path"
 import { exec } from "child_process"
@@ -16,11 +16,6 @@ const execPromise = promisify(exec)
 const userDataPath = app.getPath("userData")
 const tweaksStatePath = path.join(userDataPath, "tweakStates.json")
 const isDev = !app.isPackaged
-<<<<<<< HEAD
-const tweaksDir = isDev
-  ? path.join(process.cwd(), "Backend", "tweaks")
-  : path.join(process.resourcesPath, "tweaks")
-=======
 const tweaksDir = isDev ? path.join(process.cwd(), "Backend", "tweaks") : path.join(process.resourcesPath, "tweaks")
 
 const tweakCatalogCache = {
@@ -34,7 +29,6 @@ const tweakStateCache = {
 
 const TWEAK_CATALOG_TTL_MS = 15000
 let tweakExecutionQueue = Promise.resolve()
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
 
 const getExePath = (exeName) => {
   if (isDev) {
@@ -43,9 +37,6 @@ const getExePath = (exeName) => {
   return path.join(process.resourcesPath, exeName)
 }
 
-<<<<<<< HEAD
-async function loadTweaks() {
-=======
 const getNipPath = () => {
   if (isDev) {
     return path.resolve(process.cwd(), "Backend", "resources", "vienvidia.nip")
@@ -78,7 +69,6 @@ async function loadTweaks(forceRefresh = false) {
     return tweakCatalogCache.data
   }
 
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   const entries = await fs.readdir(tweaksDir, { withFileTypes: true })
   const tweaks = []
 
@@ -144,11 +134,8 @@ async function loadTweaks(forceRefresh = false) {
   }
 
   console.log(`[vie]: Loaded ${tweaks.length} valid tweaks`)
-<<<<<<< HEAD
-=======
   tweakCatalogCache.data = tweaks
   tweakCatalogCache.timestamp = now
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   return tweaks
 }
 
@@ -490,9 +477,6 @@ export const setupTweaksHandlers = () => {
   })
 
   ipcMain.handle("tweaks:fetch", async () => {
-<<<<<<< HEAD
-    return await loadTweaks()
-=======
     return await loadTweaks(true)
   })
 
@@ -502,60 +486,10 @@ export const setupTweaksHandlers = () => {
 
   ipcMain.handle("tweak:set-batch", async (_, { changes }) => {
     return await runInTweakQueue(() => setTweaksBatch(changes))
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   })
 
   ipcMain.handle("tweak:toggle", async (_, { id, state }) => {
-<<<<<<< HEAD
-    console.log(`[vie]: Toggling tweak "${id}" to ${state ? "ON" : "OFF"}`)
-    
-    const tweaks = await loadTweaks()
-    const tweak = findTweak(tweaks, id)
-    
-    if (!tweak) {
-      throw new Error(`Tweak "${id}" not found`)
-    }
-
-    if (state) {
-      // Apply the tweak
-      if (!tweak.psapply || tweak.psapply.trim().length === 0) {
-        throw new Error(`Tweak "${id}" has no apply script`)
-      }
-
-      // Check hardware requirements
-      if (isGPUTweak(tweak)) {
-        const gpuInfo = await detectGPU()
-        if (!gpuInfo.hasGPU) {
-          throw new Error(`Tweak "${id}" requires a dedicated GPU`)
-        }
-      }
-
-      if (isNvidiaTweak(tweak)) {
-        const gpuInfo = await detectGPU()
-        if (!gpuInfo.isNvidia) {
-          throw new Error(`Tweak "${id}" requires an NVIDIA GPU`)
-        }
-      }
-
-      if (id === "optimize-nvidia-settings") {
-        console.log(logo, "Running Nvidia settings optimization...")
-        return NvidiaProfileInspector()
-      } else {
-        console.log(`[vie]: Applying tweak: ${id}`)
-        return executePowerShell(null, { script: tweak.psapply, name: id })
-      }
-    } else {
-      // Unapply the tweak
-      if (!tweak.psunapply || tweak.psunapply.trim().length === 0) {
-        console.warn(`[vie]: Tweak "${id}" has no unapply script (one-way tweak)`)
-        return { success: true, message: "One-way tweak cannot be reverted" }
-      }
-      console.log(`[vie]: Unapplying tweak: ${id}`)
-      return executePowerShell(null, { script: tweak.psunapply, name: id })
-    }
-=======
     return await runInTweakQueue(() => setTweakState(id, !!state))
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   })
 
   ipcMain.handle("tweak:apply", async (_, idOrName) => {
@@ -563,47 +497,7 @@ export const setupTweaksHandlers = () => {
     if (!result.success) {
       throw new Error(result.error || `Failed to apply tweak "${idOrName}"`)
     }
-<<<<<<< HEAD
-
-    // Extra safety check
-    if (!tweak.psapply || tweak.psapply.trim().length === 0) {
-      throw new Error(`Tweak "${name}" has empty apply script`)
-    }
-
-    // Check hardware requirements for GPU-related tweaks
-    if (isGPUTweak(tweak)) {
-      const gpuInfo = await detectGPU()
-      if (!gpuInfo.hasGPU) {
-        throw new Error(`Tweak "${name}" requires a dedicated GPU, but none was detected`)
-      }
-    }
-
-    if (isNvidiaTweak(tweak)) {
-      const gpuInfo = await detectGPU()
-      if (!gpuInfo.isNvidia) {
-        throw new Error(`Tweak "${name}" is only for NVIDIA GPUs, but none was detected`)
-      }
-    }
-
-    if (name === "optimize-nvidia-settings") {
-      console.log(logo, "Running Nvidia settings optimization...")
-      return NvidiaProfileInspector()
-    } else {
-      console.log(`[vie]: Applying tweak: ${name}`)
-      return executePowerShell(null, { script: tweak.psapply, name })
-    }
-  })
-
-  ipcMain.handle("tweak:unapply", async (_, name) => {
-    const tweaks = await loadTweaks()
-    const tweak = findTweak(tweaks, name)
-    if (!tweak || !tweak.psunapply) {
-      throw new Error(`Tweak "${name}" not found or has no unapply script`)
-    }
-    return executePowerShell(null, { script: tweak.psunapply, name })
-=======
     return result
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   })
 
   ipcMain.handle("tweak:unapply", async (_, idOrName) => {
@@ -623,24 +517,6 @@ export const setupTweaksHandlers = () => {
   })
 }
 
-<<<<<<< HEAD
-const getActiveTweaks = () => {
-  try {
-    const data = fsSync.readFileSync(tweaksStatePath, "utf8")
-    const parsed = JSON.parse(data)
-    return Object.keys(parsed).filter((key) => parsed[key])
-  } catch (error) {
-    console.error("Error loading tweak states:", error)
-    return []
-  }
-}
-
-ipcMain.handle("tweak:active", () => {
-  return getActiveTweaks()
-})
-
-=======
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
 export const cleanupTweaksHandlers = () => {
   ipcMain.removeHandler("tweak-states:load")
   ipcMain.removeHandler("tweak-states:save")

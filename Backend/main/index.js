@@ -43,11 +43,7 @@ console.log = log.log
 console.error = log.error
 console.warn = log.warn
 
-<<<<<<< HEAD
-export const logo = "[viex]:"
-=======
 export const logo = "[viexf]:"
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
 log.initialize()
 export const getResourcePath = (...segments) => {
   if (app.isPackaged) {
@@ -63,11 +59,7 @@ async function Defender() {
       name: "Add-MpPreference",
     })
     if (result.success) {
-<<<<<<< HEAD
-      console.log(logo, "Added VieX to Windows Defender Exclusions")
-=======
       console.log(logo, "Added VieXF to Windows Defender Exclusions")
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
     } else {
       console.error(logo, "Failed to add Vie to Windows Defender Exclusions", result.error)
     }

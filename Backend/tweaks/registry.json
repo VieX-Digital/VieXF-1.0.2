@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "version": "2026-02-03T08:34:07.744Z",
-=======
-  "version": "2026-02-08T09:21:36.456Z",
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
+  "version": "2026-02-08T11:53:02.194Z",
   "tweaks": [
     {
       "id": "align-taskbar-left",
@@ -403,8 +399,6 @@
       "source": "https://github.com/vie/Vie/blob/v2/tweaks/optimize-cpu-process/meta.json"
     },
     {
-<<<<<<< HEAD
-=======
       "id": "optimize-discord",
       "title": "optimize-discord",
       "description": {
@@ -418,7 +412,6 @@
       "source": "https://github.com/vie/Vie/blob/v2/tweaks/optimize-discord/meta.json"
     },
     {
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
       "id": "optimize-network-settings",
       "title": {
         "vi": "Tối ưu mạng",
@@ -649,13 +642,8 @@
     {
       "id": "vie-amx",
       "title": {
-<<<<<<< HEAD
-        "vi": "VieX 1.0.3",
-        "en": "VieX 1.0.3"
-=======
         "vi": "VieXF 1.0.2",
         "en": "VieXF 1.0.2"
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
       },
       "description": {
         "vi": "Áp dụng toàn bộ tối ưu hóa hệ thống (One-Click).",

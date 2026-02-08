@@ -48,13 +48,8 @@ export function createTray(mainWindow) {
     { label: "Quit", click: () => app.quit() },
   ])
 
-<<<<<<< HEAD
-  tray.setToolTip("VieX Optimizer")
-  tray.setTitle("VieX Optimizer")
-=======
   tray.setToolTip("VieXF Optimizer")
   tray.setTitle("VieXF Optimizer")
->>>>>>> a41e2bc (chore: rename VieX to VieXF, update version to 1.0.2, and optimize Tweaks UI)
   tray.setContextMenu(contextMenu)
   tray.on("click", () => ToggleWindowState(mainWindow))
   return tray

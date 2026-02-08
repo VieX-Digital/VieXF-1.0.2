@@ -385,7 +385,7 @@ export default function Tweaks() {
                   <h2 className="text-2xl font-medium text-white mb-1">VieXF 1.0.2</h2>
                   <p className="text-white/80 text-sm max-w-xl">
                     {i18n.language === "vi"
-                      ? "T?i uu hóa toàn di?n h? th?ng ch? v?i 1 click. Bao g?m Debloat, Network, Input Lag và hon th? n?a."
+                      ? "Tối ưu hóa chỉ bằng 1 click. Bao gồm Debloat, Network, Input Lag và hơn thế nữa."
                       : "Comprehensive system optimization in just 1 click. Includes Debloat, Network, Input Lag and more."}
                   </p>
                 </div>
@@ -395,10 +395,9 @@ export default function Tweaks() {
                 disabled={isVieXProcessing}
                 className={`
                   h-12 px-8 text-base font-medium transition-colors
-                  ${
-                    isVieXActive
-                      ? "bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20"
-                      : "bg-cyan-400 hover:bg-cyan-300 text-black shadow-lg shadow-cyan-500/20"
+                  ${isVieXActive
+                    ? "bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20"
+                    : "bg-cyan-400 hover:bg-cyan-300 text-black shadow-lg shadow-cyan-500/20"
                   }
                 `}
               >
