@@ -114,7 +114,7 @@ export default function Settings() {
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-light text-white">{t("settings.title")}</h1>
+                        <h1 className="text-3xl font-display text-white">{t("settings.title")}</h1>
                         <p className="text-vie-text-muted text-sm mt-1">{t("settings.subtitle")}</p>
                     </div>
                     <div className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs text-vie-text-dim font-mono">

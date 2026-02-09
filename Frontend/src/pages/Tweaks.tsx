@@ -366,7 +366,7 @@ export default function Tweaks() {
         >
           <motion.div variants={itemVariants} className="flex items-center justify-between">
             <div className="rounded-2xl bg-vie-card/55 ring-1 ring-cyan-400/15 px-5 py-4 backdrop-blur-lg shadow-[0_10px_32px_rgba(0,0,0,0.35)]">
-              <h1 className="text-3xl font-light text-white">{t("tweaks.title")}</h1>
+              <h1 className="text-3xl font-display text-white">{t("tweaks.title")}</h1>
               <p className="text-white/70 text-sm mt-1">{t("tweaks.subtitle")}</p>
             </div>
           </motion.div>
@@ -382,7 +382,7 @@ export default function Tweaks() {
                   <Rocket size={32} className="text-white fill-white" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-medium text-white mb-1">VieXF 1.0.2</h2>
+                  <h2 className="text-2xl font-display text-white mb-1">VieXF 1.0.3</h2>
                   <p className="text-white/80 text-sm max-w-xl">
                     {i18n.language === "vi"
                       ? "Tối ưu hóa chỉ bằng 1 click. Bao gồm Debloat, Network, Input Lag và hơn thế nữa."

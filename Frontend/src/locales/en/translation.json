@@ -48,7 +48,7 @@
     "clear_backup_desc": "Removes old system restore points to save space.",
     "delete": "Delete",
     "modal_delete_title": "Clear All Backups?",
-    "modal_delete_desc": "This action cannot be undone. All registry backups created by VIE Tweaks will be permanently deleted.",
+    "modal_delete_desc": "This action cannot be undone. All registry backups created by VieXF will be permanently deleted.",
     "modal_delete_single_title": "Delete Backup?",
     "modal_delete_single_desc": "Are you sure you want to delete \"{{description}}\"? This action cannot be undone.",
     "cancel": "Cancel",
@@ -117,26 +117,44 @@
     "success": "Selected apps removed successfully",
     "failed": "Failed to remove apps",
     "items": {
-        "cortana": "Microsoft's legacy voice assistant.",
-        "edge": "Built-in web browser.",
-        "onedrive": "Cloud storage integration.",
-        "xbox": "Xbox Game Bar and related services.",
-        "maps": "Offline maps application.",
-        "weather": "Weather forecast app.",
-        "news": "News feed widget.",
-        "telemetry": "Windows data collection services."
+      "cortana": "Microsoft's legacy voice assistant.",
+      "edge": "Built-in web browser.",
+      "onedrive": "Cloud storage integration.",
+      "xbox": "Xbox Game Bar and related services.",
+      "maps": "Offline maps application.",
+      "weather": "Weather forecast app.",
+      "news": "News feed widget.",
+      "telemetry": "Windows data collection services."
     }
   },
   "utilities": {
     "title": "Utilities",
     "subtitle": "Useful tools and shortcuts for system management.",
     "items": {
-        "activation": { "title": "Activation Status", "desc": "Check Windows activation state." },
-        "keyboard": { "title": "Keyboard Test", "desc": "Test all keys on your keyboard." },
-        "display": { "title": "Display Settings", "desc": "Quick access to resolution & scale." },
-        "network": { "title": "Network Reset", "desc": "Reset network adapters & stack." },
-    "disk": { "title": "Disk Cleanup (Native)", "desc": "Open classic Disk Cleanup tool." },
-        "cmd": { "title": "Command Prompt", "desc": "Launch CMD as Administrator." }
+      "activation": {
+        "title": "Activation Status",
+        "desc": "Check Windows activation state."
+      },
+      "keyboard": {
+        "title": "Keyboard Test",
+        "desc": "Test all keys on your keyboard."
+      },
+      "display": {
+        "title": "Display Settings",
+        "desc": "Quick access to resolution & scale."
+      },
+      "network": {
+        "title": "Network Reset",
+        "desc": "Reset network adapters & stack."
+      },
+      "disk": {
+        "title": "Disk Cleanup (Native)",
+        "desc": "Open classic Disk Cleanup tool."
+      },
+      "cmd": {
+        "title": "Command Prompt",
+        "desc": "Launch CMD as Administrator."
+      }
     },
     "failed": "Failed to launch"
   },
@@ -153,10 +171,10 @@
     "failed": "Failed to update DNS",
     "reset_toast": "DNS reset to DHCP (Auto)",
     "providers": {
-        "google": "Reliable and fast.",
-        "cloudflare": "Performance & Privacy focused.",
-        "quad9": "Malware blocking.",
-        "adguard": "Blocks Ads & Trackers."
+      "google": "Reliable and fast.",
+      "cloudflare": "Performance & Privacy focused.",
+      "quad9": "Malware blocking.",
+      "adguard": "Blocks Ads & Trackers."
     }
   },
   "backup": {

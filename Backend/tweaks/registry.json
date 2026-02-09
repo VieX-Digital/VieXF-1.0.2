@@ -1,5 +1,5 @@
 {
-  "version": "2026-02-08T13:41:31.123Z",
+  "version": "2026-02-09T14:37:06.712Z",
   "tweaks": [
     {
       "id": "align-taskbar-left",
@@ -361,6 +361,25 @@
       "source": "https://github.com/vie/Vie/blob/v2/tweaks/enable-optimization-for-windowed-games/meta.json"
     },
     {
+      "id": "laptop-productivity-work",
+      "title": {
+        "vi": "Tối ưu hóa Laptop (Văn phòng)",
+        "en": "Laptop Productivity Optimization"
+      },
+      "description": {
+        "vi": "Tối ưu hóa pin và nhiệt độ cho tác vụ văn phòng. Giữ lại in ấn, update.",
+        "en": "Optimizes battery and thermals for office tasks. Keeps printing and updates enabled."
+      },
+      "category": [
+        "Productivity",
+        "Battery"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/laptop-productivity-work",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/laptop-productivity-work/meta.json"
+    },
+    {
       "id": "menu-show-delay-zero",
       "title": {
         "vi": "Menu hiện tức thì",
@@ -450,6 +469,25 @@
       "reversible": false,
       "docsurl": "https://docs.getvie.net/tweaks/optimize-nvidia-settings",
       "source": "https://github.com/vie/Vie/blob/v2/tweaks/optimize-nvidia-settings/meta.json"
+    },
+    {
+      "id": "pc-productivity-work",
+      "title": {
+        "vi": "Tối ưu hóa PC (Văn phòng)",
+        "en": "PC Workstation Optimization"
+      },
+      "description": {
+        "vi": "Hiệu năng ổn định cho máy bàn. Tắt tiết kiệm điện không cần thiết.",
+        "en": "Stable performance for desktops. Disables unnecessary power saving."
+      },
+      "category": [
+        "Productivity",
+        "Performance"
+      ],
+      "recommended": true,
+      "reversible": true,
+      "docsurl": "https://docs.getvie.net/tweaks/pc-productivity-work",
+      "source": "https://github.com/vie/Vie/blob/v2/tweaks/pc-productivity-work/meta.json"
     },
     {
       "id": "remove-gaming-apps",
@@ -642,8 +680,8 @@
     {
       "id": "vie-amx",
       "title": {
-        "vi": "VieXF 1.0.2",
-        "en": "VieXF 1.0.2"
+        "vi": "VieXF 1.0.3",
+        "en": "VieXF 1.0.3"
       },
       "description": {
         "vi": "Áp dụng toàn bộ tối ưu hóa hệ thống (One-Click).",

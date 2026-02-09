@@ -24,9 +24,9 @@ if (-not (Test-IsAdmin)) {
     exit 1
 }
 
-$logRoot = Join-Path $env:SystemDrive 'Oneclick Logs'
+$logRoot = Join-Path $env:SystemDrive 'VieX Logs'
 New-Item -Path $logRoot -ItemType Directory -Force | Out-Null
-$script:LogFile = Join-Path $logRoot ("Oneclick-" + (Get-Date -Format 'yyyyMMdd-HHmmss') + ".log")
+$script:LogFile = Join-Path $logRoot ("VieX-" + (Get-Date -Format 'yyyyMMdd-HHmmss') + ".log")
 Start-Transcript -Path (Join-Path $logRoot ("Transcript-" + (Get-Date -Format 'yyyyMMdd-HHmmss') + ".txt")) -Force | Out-Null
 Write-Log "Log file: $script:LogFile"
 #endregion
@@ -177,7 +177,7 @@ try {
     try {
         Invoke-RegExe add 'HKLM\Software\Microsoft\Windows NT\CurrentVersion\SystemRestore' '/v "SystemRestorePointCreationFrequency" /t REG_DWORD /d 0 /f'
         Enable-ComputerRestore -Drive "$env:SystemDrive\" -ErrorAction SilentlyContinue
-        Checkpoint-Computer -Description 'VieXF 1.0.2' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue
+        Checkpoint-Computer -Description 'VieXF 1.0.3' -RestorePointType 'MODIFY_SETTINGS' -ErrorAction SilentlyContinue
         Write-Log "Restore point request submitted."
     }
     catch {
@@ -322,138 +322,7 @@ try {
     }
     #endregion
 
-    #region Graphics Preferences / Priority / FSO
-    Write-Log "Applying Graphics Preferences / Priority / FSO rules (only if target files exist)."
-
-    $programFilesRoblox = Get-ChildItem 'C:\Program Files (x86)\Roblox\Versions' -Directory -Filter 'version-*' -ErrorAction SilentlyContinue |
-    Sort-Object Name -Descending | Select-Object -First 1
-    $appDataRoblox = Get-ChildItem (Join-Path $env:LOCALAPPDATA 'Roblox\Versions') -Directory -Filter 'version-*' -ErrorAction SilentlyContinue |
-    Sort-Object Name -Descending | Select-Object -First 1
-    $discord = Get-ChildItem (Join-Path $env:LOCALAPPDATA 'Discord') -Directory -Filter 'app-*' -ErrorAction SilentlyContinue |
-    Sort-Object Name -Descending | Select-Object -First 1
-
-    $vars = @{
-        ProgramFilesRobloxPath = if ($programFilesRoblox) { Join-Path $programFilesRoblox.FullName 'RobloxPlayerBeta.exe' } else { '' }
-        AppDataRobloxPath      = if ($appDataRoblox) { Join-Path $appDataRoblox.FullName 'RobloxPlayerBeta.exe' } else { '' }
-        LatestDiscordPath      = if ($discord) { Join-Path $discord.FullName 'Discord.exe' } else { '' }
-    }
-
-    $Games = @(
-        "%ProgramFilesRobloxPath%"
-        "%AppDataRobloxPath%"
-        "C:\Program Files\Epic Games\Fortnite\FortniteGame\Binaries\Win64\FortniteClient-Win64-Shipping.exe"
-        "C:\Program Files\Epic Games\GTAV\PlayGTAV.exe"
-        "C:\Program Files\Riot Games\Riot Client\RiotClientServices.exe"
-        "C:\Riot Games\VALORANT\live\VALORANT.exe"
-        "%USERPROFILE%\AppData\Local\osu!\osu!.exe"
-        "%ProgramFiles%\Steam\steamapps\common\Counter-Strike Global Offensive\csgo.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Apex Legends\r5apex.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Rust\RustClient.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Overwatch\Overwatch.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Call of Duty\cod.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Rainbow Six Siege\RainbowSix.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\PUBG\TslGame.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Destiny 2\destiny2.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\GTA5\GTA5.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Dota 2\game\bin\win64\dota2.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Warframe\Warframe.x64.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\ARK\ShooterGame\Binaries\Win64\ShooterGame.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\GarrysMod\hl2.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\The Witcher 3\bin\x64\witcher3.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Cyberpunk 2077\bin\x64\Cyberpunk2077.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Elden Ring\Game\eldenring.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Hogwarts Legacy\Phoenix\Binaries\Win64\HogwartsLegacy.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Starfield\Starfield.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Baldurs Gate 3\bin\bg3.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Red Dead Redemption 2\RDR2.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Forza Horizon 5\ForzaHorizon5.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\FIFA 23\FIFA23.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Minecraft\Launcher\MinecraftLauncher.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\League of Legends\LeagueClient.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Rocket League\Binaries\Win64\RocketLeague.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Fall Guys\FallGuys_client_game.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Dead by Daylight\DeadByDaylight-Win64-Shipping.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Phasmophobia\Phasmophobia.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Genshin Impact\GenshinImpact.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Honkai Star Rail\StarRail.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\War Thunder\aces.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\World of Tanks\WorldOfTanks.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\World of Warcraft\Wow.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Diablo IV\Diablo IV.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Path of Exile\PathOfExile.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Grand Theft Auto San Andreas\gta_sa.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Need for Speed Heat\NFSHeat.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa\acs.exe"
-        "C:\Program Files (x86)\Steam\steamapps\common\Project Cars 2\pCars2.exe"
-    ) | ForEach-Object { Expand-BatchPath -Text $_ -Vars $vars } | Where-Object { $_ -and (Test-Path -LiteralPath $_) }
-
-    $Apps = @(
-        "%LatestDiscordPath%"
-        "%USERPROFILE%\AppData\Roaming\Spotify\Spotify.exe"
-        "C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe"
-        "C:\Program Files\Google\Chrome\Application\chrome.exe"
-        "C:\Program Files\Mozilla Firefox\firefox.exe"
-        "C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"
-        "C:\Program Files\Opera\launcher.exe"
-        "C:\Program Files\Microsoft\Edge\Application\msedge.exe"
-        "C:\Program Files\7-Zip\7zG.exe"
-        "C:\Program Files\VideoLAN\VLC\vlc.exe"
-        "C:\Program Files\Notepad++\notepad++.exe"
-        "C:\Program Files\WinRAR\WinRAR.exe"
-        "C:\Program Files\qBittorrent\qbittorrent.exe"
-        "C:\Program Files\Docker\Docker\Docker Desktop.exe"
-        "C:\Program Files\Microsoft VS Code\Code.exe"
-        "C:\Program Files\Core Temp\Core Temp.exe"
-        "C:\Program Files (x86)\Steam\steam.exe"
-    ) | ForEach-Object { Expand-BatchPath -Text $_ -Vars $vars } | Where-Object { $_ -and (Test-Path -LiteralPath $_) }
-
-    $OtherExeNames = @(
-        "Adobe Premiere Pro.exe"
-        "VegasPro.exe"
-        "Resolve.exe"
-        "blender.exe"
-        "shotcut.exe"
-        "HandBrake.exe"
-        "capcut.exe"
-        "Cinebench.exe"
-        "3DMark.exe"
-        "LatMon.exe"
-        "y-cruncher.exe"
-        "TM5.exe"
-        "linpack_xeon64.exe"
-        "node.exe"
-        "WinRAR.exe"
-        "UnRAR.exe"
-        "Rar.exe"
-        "7zFM.exe"
-        "7zG.exe"
-        "7z.exe"
-    )
-
-    $regKeyGP = 'HKCU\SOFTWARE\Microsoft\DirectX\UserGpuPreferences'
-    $regKeyPR = 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options'
-    $regKeyFO = 'HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers'
-
-    foreach ($path in $Games) {
-        $exe = [IO.Path]::GetFileName($path)
-        Write-Log "High Performance + High Priority + FSO: $exe"
-        Invoke-RegExe add $regKeyGP ("/v `"$path`" /t REG_SZ /d `"GpuPreference=2`" /f")
-        Invoke-RegExe add ("$regKeyPR\$exe\PerfOptions") ("/v `"CpuPriorityClass`" /t REG_DWORD /d `"3`" /f")
-        Invoke-RegExe add $regKeyFO ("/v `"$path`" /t REG_SZ /d `"~ DISABLEDXMAXIMIZEDWINDOWEDMODE HIGHDPIAWARE`" /f")
-    }
-
-    foreach ($path in $Apps) {
-        $exe = [IO.Path]::GetFileName($path)
-        Write-Log "Power Saving + Low Priority: $exe"
-        Invoke-RegExe add $regKeyGP ("/v `"$path`" /t REG_SZ /d `"GpuPreference=1`" /f")
-        Invoke-RegExe add ("$regKeyPR\$exe\PerfOptions") ("/v `"CpuPriorityClass`" /t REG_DWORD /d `"1`" /f")
-    }
-
-    foreach ($exeName in $OtherExeNames) {
-        Invoke-RegExe add ("$regKeyPR\$exeName\PerfOptions") ("/v `"CpuPriorityClass`" /t REG_DWORD /d `"3`" /f")
-    }
-    #endregion
+    # Graphics Preferences / Priority / FSO (Removed as requested)
 
     #region App removals
     Write-Log "Removing bundled AppX packages."
@@ -532,6 +401,8 @@ try {
     #endregion
 
     #region Xbox bloat file deletions (with backup)
+    Write-Log "Skipping Xbox bloat file deletions (unsafe operation). Services will be disabled instead."
+    <#
     Write-Log "Deleting Xbox bloat files (if present) and backing up."
     $xboxPath = 'C:\Windows\System32'
     $backupDir = 'C:\Oneclick Tools\Backup\Xbox Bloat'
@@ -577,6 +448,7 @@ try {
             }
         }
     }
+    #>
     #endregion
 
     #region Services (start type changes)
@@ -777,7 +649,7 @@ try {
 
     if ($gpuNames -match 'NVIDIA') {
         Write-Log "Detected NVIDIA GPU(s): $gpuNames"
-        Invoke-External -FilePath 'C:\Oneclick Tools\Nvidia Profile Inspector\nvidiaProfileInspector.exe' -Arguments @('-importProfile', 'C:\Oneclick Tools\Nvidia Profile Inspector\QuakedOptimizedNVProflie.nip') -IgnoreErrors
+        Invoke-External -FilePath 'C:\VieX Tools\Nvidia Profile Inspector\nvidiaProfileInspector.exe' -Arguments @('-importProfile', 'C:\VieX Tools\Nvidia Profile Inspector\QuakedOptimizedNVProflie.nip') -IgnoreErrors
 
         foreach ($k in Get-ChildItem 'HKLM:\SYSTEM\CurrentControlSet\Control\Video' -ErrorAction SilentlyContinue) {
             $p = Join-Path $k.PSPath '0000'
@@ -864,8 +736,8 @@ try {
 
     #region Power Plan (single-path)
     Write-Log "Importing and activating Quaked power plans if present."
-    $pow1 = 'C:\Oneclick Tools\Power Plans\Quaked Ultimate Performance.pow'
-    $pow2 = 'C:\Oneclick Tools\Power Plans\Quaked Ultimate Performance Idle Off.pow'
+    $pow1 = 'C:\VieX Tools\Power Plans\Quaked Ultimate Performance.pow'
+    $pow2 = 'C:\VieX Tools\Power Plans\Quaked Ultimate Performance Idle Off.pow'
     if (Test-Path $pow1) { try { & powercfg -import $pow1 2>$null | Out-Null } catch { Write-Log "powercfg import failed: $pow1" 'WARN' } }
     if (Test-Path $pow2) { try { & powercfg -import $pow2 2>$null | Out-Null } catch { Write-Log "powercfg import failed: $pow2" 'WARN' } }
 

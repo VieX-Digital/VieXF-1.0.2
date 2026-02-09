@@ -47,7 +47,7 @@ export default function Apps() {
             <div className="max-w-5xl mx-auto px-6 py-8 space-y-8">
                 <div className="flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-light text-white">{t("apps.title")}</h1>
+                        <h1 className="text-3xl font-display text-white">{t("apps.title")}</h1>
                         <p className="text-vie-text-muted text-sm mt-1">{t("apps.subtitle")}</p>
                     </div>
 

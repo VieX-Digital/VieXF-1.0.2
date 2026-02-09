@@ -101,7 +101,7 @@ export default function FirstTime() {
                         <span className="font-semibold text-cyan-300">Khuyên dùng:</span> Tạo điểm khôi phục giúp bạn dễ dàng quay lại trạng thái trước đó nếu có sự cố.
                       </p>
                       <p className="text-xs text-white/50 leading-relaxed">
-                        Chỉ tải VIE từ <span className="text-white/80">getvie.net</span> hoặc <span className="text-white/80">GitHub</span> chính thức để tránh phần mềm giả mạo.
+                        Chỉ tải VieXF từ <span className="text-white/80">getvie.net</span> hoặc <span className="text-white/80">GitHub</span> chính thức để tránh phần mềm giả mạo.
                       </p>
                     </div>
                   </div>

@@ -45,7 +45,7 @@ export default function Titlebar() {
                 <div className="flex items-baseline gap-1.5 text-sm font-medium tracking-wide">
                     <span className="text-white font-bold font-display">VIE</span>
                     <span className="text-cyan-400 font-bold">XF</span>
-                    <span className="text-[10px] text-white/40 font-mono ml-1">v1.0.2</span>
+                    <span className="text-[10px] text-white/40 font-mono ml-1">v1.0.3</span>
                 </div>
             </div>
 
