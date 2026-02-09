@@ -406,7 +406,7 @@ export default function Tweaks() {
                 ) : isVieXActive ? (
                   i18n.language === "vi" ? "Hoàn tác" : "Revert"
                 ) : i18n.language === "vi" ? (
-                  "Áp d?ng"
+                  "Áp dụng"
                 ) : (
                   "Apply"
                 )}
