@@ -293,7 +293,6 @@ try {
         @{ Action = 'add'; Key = 'HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\SettingSync\Groups\Language'; Rest = '/v Enabled /t REG_DWORD /d `"0`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SOFTWARE\Policies\Microsoft\Windows\System'; Rest = '/v EnableSmartScreen /t REG_DWORD /d `"0`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SOFTWARE\Policies\Microsoft\Windows\System'; Rest = '/v DisableAcrylicBackgroundOnLogon /t REG_DWORD /d `"1`" /f' }
-        @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Services\TimeBrokerSvc'; Rest = '/v Start /t REG_DWORD /d `"4`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Services\CDPSvc'; Rest = '/v Start /t REG_DWORD /d `"4`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Services\DiagTrack'; Rest = '/v Start /t REG_DWORD /d `"4`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Services\diagnosticshub.standardcollector.service'; Rest = '/v Start /t REG_DWORD /d `"4`" /f' }
@@ -306,7 +305,7 @@ try {
         @{ Action = 'add'; Key = 'HKCU\Control Panel\Accessibility\Keyboard Response'; Rest = '/v Flags /t REG_SZ /d `"122`" /f' }
         @{ Action = 'add'; Key = 'HKCU\Control Panel\Accessibility\ToggleKeys'; Rest = '/v Flags /t REG_SZ /d `"58`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer'; Rest = '/v Max Cached Icons /t REG_SZ /d `"4096`" /f' }
-        @{ Action = 'add'; Key = 'HKLM\SOFTWARE\Microsoft\Windows\Dwm'; Rest = '/v OverlayTestMode /t REG_DWORD /d 5 /f' }
+        # @{ Action = 'add'; Key = 'HKLM\SOFTWARE\Microsoft\Windows\Dwm'; Rest = '/v OverlayTestMode /t REG_DWORD /d 5 /f' }
         @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel'; Rest = '/v DynamicHeteroCpuPolicyMask /t REG_DWORD /d `"3`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel'; Rest = '/v DefaultDynamicHeteroCpuPolicy /t REG_DWORD /d `"3`" /f' }
         @{ Action = 'add'; Key = 'HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel'; Rest = '/v DynamicHeteroCpuPolicyImportant /t REG_DWORD /d `"1`" /f' }
@@ -456,7 +455,6 @@ try {
     $Services = @(
         @{ Name = "ucpd"; Start = "disabled" }
         @{ Name = "TrustedInstaller"; Start = "disabled" }
-        @{ Name = "VSS"; Start = "demand" }
         @{ Name = "swprv"; Start = "demand" }
         @{ Name = "AarSvc"; Start = "disabled" }
         @{ Name = "ADPSvc"; Start = "disabled" }
@@ -494,8 +492,8 @@ try {
         @{ Name = "diagnosticshub.standardcollector.service"; Start = "disabled" }
         @{ Name = "diagsvc"; Start = "disabled" }
         @{ Name = "DiagTrack"; Start = "disabled" }
-        @{ Name = "DispBrokerDesktopSvc"; Start = "disabled" }
-        @{ Name = "DisplayEnhancementService"; Start = "disabled" }
+        @{ Name = "DispBrokerDesktopSvc"; Start = "demand" }
+        @{ Name = "DisplayEnhancementService"; Start = "demand" }
         @{ Name = "DmEnrollmentSvc"; Start = "disabled" }
         @{ Name = "dmwappushservice"; Start = "disabled" }
         @{ Name = "DoSvc"; Start = "disabled" }
@@ -559,7 +557,6 @@ try {
         @{ Name = "SCardSvr"; Start = "disabled" }
         @{ Name = "ScDeviceEnum"; Start = "disabled" }
         @{ Name = "SCPolicySvc"; Start = "disabled" }
-        @{ Name = "SDRSVC"; Start = "disabled" }
         @{ Name = "seclogon"; Start = "disabled" }
         @{ Name = "SecurityHealthService"; Start = "disabled" }
         @{ Name = "SEMgrSvc"; Start = "disabled" }
@@ -569,7 +566,6 @@ try {
         @{ Name = "SensrSvc"; Start = "disabled" }
         @{ Name = "SessionEnv"; Start = "disabled" }
         @{ Name = "SharedRealitySvc"; Start = "disabled" }
-        @{ Name = "ShellHWDetection"; Start = "disabled" }
         @{ Name = "SmsRouter"; Start = "disabled" }
         @{ Name = "SNMPTRAP"; Start = "disabled" }
         @{ Name = "Spooler"; Start = "disabled" }
@@ -582,9 +578,9 @@ try {
         @{ Name = "TapiSrv"; Start = "disabled" }
         @{ Name = "TermService"; Start = "disabled" }
         @{ Name = "TextInputManagementService"; Start = "disabled" }
-        @{ Name = "Themes"; Start = "disabled" }
-        @{ Name = "TimeBrokerSvc"; Start = "disabled" }
-        @{ Name = "TokenBroker"; Start = "disabled" }
+        @{ Name = "Themes"; Start = "auto" }
+        @{ Name = "TimeBrokerSvc"; Start = "auto" }
+        @{ Name = "TokenBroker"; Start = "demand" }
         @{ Name = "TrkWks"; Start = "disabled" }
         @{ Name = "TroubleshootingSvc"; Start = "disabled" }
         @{ Name = "TrustedInstaller"; Start = "disabled" }
@@ -592,7 +588,7 @@ try {
         @{ Name = "UevAgentService"; Start = "disabled" }
         @{ Name = "UmRdpService"; Start = "disabled" }
         @{ Name = "UserDataSvc"; Start = "disabled" }
-        @{ Name = "VaultSvc"; Start = "disabled" }
+        @{ Name = "VaultSvc"; Start = "demand" }
         @{ Name = "vds"; Start = "disabled" }
         @{ Name = "vmcompute"; Start = "disabled" }
         @{ Name = "vmicguestinterface"; Start = "disabled" }
@@ -603,7 +599,6 @@ try {
         @{ Name = "vmictimesync"; Start = "disabled" }
         @{ Name = "vmicvmsession"; Start = "disabled" }
         @{ Name = "vmicvss"; Start = "disabled" }
-        @{ Name = "VSS"; Start = "demand" }
         @{ Name = "W32Time"; Start = "disabled" }
         @{ Name = "WaaSMedicSvc"; Start = "disabled" }
         @{ Name = "WalletService"; Start = "disabled" }
@@ -626,7 +621,6 @@ try {
         @{ Name = "WPDBusEnum"; Start = "disabled" }
         @{ Name = "WpnService"; Start = "disabled" }
         @{ Name = "WpnUserService"; Start = "disabled" }
-        @{ Name = "wscsvc"; Start = "disabled" }
         @{ Name = "WSearch"; Start = "disabled" }
         @{ Name = "wuauserv"; Start = "disabled" }
         @{ Name = "XblAuthManager"; Start = "disabled" }
@@ -656,8 +650,8 @@ try {
             if (Test-Path $p) {
                 $reg = $p -replace '^Microsoft\.PowerShell\.Core\\Registry::', ''
                 Invoke-RegExe add $reg '/v "PowerMizerEnable" /t REG_DWORD /d "1" /f'
-                Invoke-RegExe add $reg '/v "PowerMizerLevel" /t REG_DWORD /d "1" /f'
-                Invoke-RegExe add $reg '/v "PowerMizerLevelAC" /t REG_DWORD /d "1" /f'
+                Invoke-RegExe add $reg '/v "PowerMizerLevel" /t REG_DWORD /d "0" /f'
+                Invoke-RegExe add $reg '/v "PowerMizerLevelAC" /t REG_DWORD /d "0" /f'
                 Invoke-RegExe add $reg '/v "PerfLevelSrc" /t REG_DWORD /d "8738" /f'
             }
         }
@@ -680,7 +674,7 @@ try {
             $k = $disp.PSPath -replace '^Microsoft\.PowerShell\.Core\\Registry::', ''
             Invoke-RegExe add $k '/v "RMHdcpKeyGlobZero" /t REG_DWORD /d 1 /f'
         }
-        Invoke-RegExe add 'HKLM\SOFTWARE\Microsoft\Windows\Dwm' '/v "OverlayTestMode" /t REG_DWORD /d 5 /f'
+        # Invoke-RegExe add 'HKLM\SOFTWARE\Microsoft\Windows\Dwm' '/v "OverlayTestMode" /t REG_DWORD /d 5 /f'
     }
     elseif ($gpuNames -match 'AMD|Radeon') {
         Write-Log "Detected AMD GPU(s): $gpuNames"
@@ -709,7 +703,7 @@ try {
             $k = $disp.PSPath -replace '^Microsoft\.PowerShell\.Core\\Registry::', ''
             Invoke-RegExe add $k '/v "RMHdcpKeyGlobZero" /t REG_DWORD /d 1 /f'
         }
-        Invoke-RegExe add 'HKLM\SOFTWARE\Microsoft\Windows\Dwm' '/v "OverlayTestMode" /t REG_DWORD /d 5 /f'
+        # Invoke-RegExe add 'HKLM\SOFTWARE\Microsoft\Windows\Dwm' '/v "OverlayTestMode" /t REG_DWORD /d 5 /f'
     }
     else {
         Write-Log "Detected Intel/Other GPU(s): $gpuNames"
