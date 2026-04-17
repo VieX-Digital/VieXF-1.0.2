@@ -85,11 +85,10 @@ const StatCard = memo(({
             <Icon size={24} strokeWidth={1.5} />
           </div>
           {trend && (
-            <div className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md ${
-              trend === 'up' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' : 
-              trend === 'down' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' : 
-              'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-            }`}>
+            <div className={`flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md ${trend === 'up' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                trend === 'down' ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20' :
+                  'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+              }`}>
               {trend === 'up' || trend === 'down' ? <ArrowUpRight size={12} /> : <ArrowDownRight size={12} />}
               {trendValue}
             </div>
@@ -189,7 +188,7 @@ export default function Home() {
   return (
     <RootDiv style={{}}>
       <div className="relative max-w-7xl mx-auto px-6 py-6 flex flex-col gap-8 h-full">
-        
+
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-2 border-b border-white/5">
           <div>
@@ -239,9 +238,9 @@ export default function Home() {
             trend="up"
             trendValue="+12.8%"
             actionButton={
-              <a 
-                href="https://discord.com/channels/1274585470633906176/1466020101554835466" 
-                target="_blank" 
+              <a
+                href="https://discord.com/channels/1274585470633906176/1466020101554835466"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wider border border-red-500/30 transition-colors shadow-[0_0_15px_-5px_rgba(239,68,68,0.5)] inline-block"
               >
@@ -262,11 +261,10 @@ export default function Home() {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative px-6 py-2 rounded-lg text-sm font-bold tracking-wider uppercase transition-all duration-300 outline-none ${
-                    activeTab === tab.id 
-                    ? `bg-white/10 text-white shadow-md border border-white/10` 
-                    : `text-white/40 hover:text-white/80 hover:bg-white/5 border border-transparent`
-                  }`}
+                  className={`relative px-6 py-2 rounded-lg text-sm font-bold tracking-wider uppercase transition-all duration-300 outline-none ${activeTab === tab.id
+                      ? `bg-white/10 text-white shadow-md border border-white/10`
+                      : `text-white/40 hover:text-white/80 hover:bg-white/5 border border-transparent`
+                    }`}
                 >
                   {tab.label}
                   {activeTab === tab.id && (
@@ -280,17 +278,17 @@ export default function Home() {
             <div className="relative flex-1 rounded-2xl bg-[#09090b]/80 backdrop-filter backdrop-blur-xl border border-white/5 p-8 shadow-[0_15px_40px_-15px_rgba(0,0,0,0.8)] flex flex-col justify-center overflow-hidden group">
               {/* Dynamic decorative minimal glow */}
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-cyan-900/20 blur-[80px] rounded-full transition-opacity duration-1000 group-hover:opacity-100 opacity-50 pointer-events-none" />
-              
+
               <div className="relative z-10 w-full flex items-center justify-between">
                 <AnimatedCounter value={activeValue} label={`${activeTab} Load Status`} subLabel={trendLabel} />
-                
+
                 {/* CSS Visualizer Rings */}
                 <div className="relative w-48 h-48 flex items-center justify-center">
                   <svg className="-rotate-90 w-full h-full drop-shadow-[0_0_15px_rgba(34,211,238,0.2)]">
                     <circle cx="96" cy="96" r="80" stroke="rgba(255,255,255,0.05)" strokeWidth="12" fill="none" />
-                    <circle cx="96" cy="96" r="80" stroke="currentColor" strokeWidth="12" fill="none" 
+                    <circle cx="96" cy="96" r="80" stroke="currentColor" strokeWidth="12" fill="none"
                       className={`text-${TAB_COLORS[activeTab]} transition-all duration-1000 ease-out`}
-                      strokeDasharray="502" 
+                      strokeDasharray="502"
                       strokeDashoffset={502 - (502 * activeValue) / 100}
                       strokeLinecap="round" />
                   </svg>
